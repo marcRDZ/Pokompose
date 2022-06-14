@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import es.marcrdz.presentation.base.ErrorState
 import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.base.ViewState
 import es.marcrdz.presentation.handlers.main.MainEvent
@@ -53,7 +54,7 @@ class MainActivity : BaseView<MainEvent, MainState>, ComponentActivity() {
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect {
                 when (it) {
-                    is ViewState.Fail<*> -> {}
+                    is ViewState.Fail -> processErrorState(it.error)
                     ViewState.Idle -> {}
                     ViewState.Loading -> {}
                     is ViewState.StateChange -> processViewState(it.state)
@@ -69,6 +70,11 @@ class MainActivity : BaseView<MainEvent, MainState>, ComponentActivity() {
             }
         }
     }
+
+    override fun processErrorState(errorState: ErrorState) {
+        Log.e(MainActivity::class.simpleName, errorState.toString())
+    }
+
 }
 
 @Composable

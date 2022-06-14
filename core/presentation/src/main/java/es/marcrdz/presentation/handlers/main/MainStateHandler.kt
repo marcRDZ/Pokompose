@@ -6,6 +6,7 @@ import es.marcrdz.domain.usecases.UseCase
 import es.marcrdz.presentation.PresentationContract
 import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.base.ViewState
+import es.marcrdz.presentation.mappers.toErrorState
 import javax.inject.Inject
 
 interface MainStateHandler : PresentationContract.StateHandler<ViewEvent<MainEvent>, ViewState<MainState>>
@@ -23,7 +24,7 @@ class MainStateHandlerImpl @Inject constructor(
                 viewState(ViewState.Loading)
                 fetchPokemonReferencesUC().let { result ->
                     viewState(ViewState.Idle)
-                    result.fold({ viewState(ViewState.Fail(it)) })
+                    result.fold({ viewState(ViewState.Fail(it.toErrorState())) })
                     { viewState(ViewState.StateChange(MainState.PokemonReferencesFetched(it))) }
                 }
             }

@@ -1,12 +1,18 @@
 package es.marcrdz.presentation.base
 
-import es.marcrdz.domain.domain.DomainError
-
 sealed class ViewState<out T: State> {
-    object Loading: ViewState<Nothing>()
     object Idle: ViewState<Nothing>()
-    class StateChange<out T: State>(val state: T): ViewState<T>() { }
-    class Fail<out T: DomainError>(val error: T): ViewState<Nothing>() { }
+    object Loading: ViewState<Nothing>()
+    class Fail(val error: ErrorState): ViewState<Nothing>()
+    class StateChange<out T: State>(val state: T): ViewState<T>()
 }
 
 open class State
+
+sealed class ErrorState: State() {
+    object Unknown: ErrorState()
+    object NoData: ErrorState()
+    object Network : ErrorState()
+    object Server : ErrorState()
+    class Exception(type: String, msg: String): ErrorState()
+}
