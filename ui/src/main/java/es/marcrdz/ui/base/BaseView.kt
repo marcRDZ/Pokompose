@@ -1,11 +1,10 @@
 package es.marcrdz.ui.base
 
-import es.marcrdz.presentation.base.ErrorState
+import es.marcrdz.presentation.base.ErrorReport
 import es.marcrdz.presentation.base.Event
-import es.marcrdz.presentation.base.State
-import es.marcrdz.presentation.base.ViewState
+import es.marcrdz.presentation.base.Report
 
-interface BaseView<E : Event, S : State> {
+interface BaseView<E : Event, S : Report> {
 
     val viewModel: BaseViewModel<E, S>
 
@@ -13,6 +12,6 @@ interface BaseView<E : Event, S : State> {
 
     fun processViewState(viewState: S)
 
-    fun processErrorState(errorState: ErrorState)
+    fun processErrorState(errorState: ErrorReport)
 
 }

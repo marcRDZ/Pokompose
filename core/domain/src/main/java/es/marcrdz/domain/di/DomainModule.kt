@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import es.marcrdz.domain.domain.DomainReference
+import es.marcrdz.domain.domain.DomainReferencePage
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUc
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUseCase
 import es.marcrdz.domain.usecases.UseCase
@@ -15,5 +16,5 @@ abstract class DomainModule {
 
     @FetchPokemonReferencesUseCase
     @Binds
-    abstract fun bindFetchPokemonReferencesUc(useCase: FetchPokemonReferencesUc): UseCase<Nothing, List<DomainReference.Pokemon>>
+    abstract fun bindFetchPokemonReferencesUc(useCase: FetchPokemonReferencesUc): UseCase<Nothing, DomainReferencePage<DomainReference.Pokemon>>
 }

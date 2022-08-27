@@ -1,45 +1,45 @@
 package es.marcrdz.presentation.handlers.main
 
 import es.marcrdz.domain.domain.DomainReference
+import es.marcrdz.domain.domain.DomainReferencePage
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUseCase
 import es.marcrdz.domain.usecases.UseCase
 import es.marcrdz.presentation.PresentationContract
-import es.marcrdz.presentation.base.ViewEvent
-import es.marcrdz.presentation.base.ViewState
-import es.marcrdz.presentation.mappers.toErrorState
+import es.marcrdz.presentation.base.*
+import es.marcrdz.presentation.domain.PresentationReference
+import es.marcrdz.presentation.mappers.toPresentation
 import javax.inject.Inject
 
-interface MainStateHandler : PresentationContract.StateHandler<ViewEvent<MainEvent>, ViewState<MainState>>
+interface MainStateHandler : PresentationContract.EventHandler<ViewEvent<MainEvent>, ViewState<MainReport>>
 
 class MainStateHandlerImpl @Inject constructor(
-    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards List<DomainReference.Pokemon>>
+    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards DomainReferencePage<DomainReference.Pokemon>>
 ) : MainStateHandler {
 
-    override suspend fun handle(
-        viewEvent: ViewEvent<MainEvent>,
-        viewState: (ViewState<MainState>) -> Unit
-    ) {
-        when (viewEvent) {
-            ViewEvent.Lifecycle.OnStart -> {
-                viewState(ViewState.Loading)
-                fetchPokemonReferencesUC().let { result ->
-                    viewState(ViewState.Idle)
-                    result.fold({ viewState(ViewState.Fail(it.toErrorState())) })
-                    { viewState(ViewState.StateChange(MainState.PokemonReferencesFetched(it))) }
+    override suspend fun handleInit(viewState: suspend (ViewState<MainReport>) -> Unit) {
+        viewState(BackgroundState(BackgroundReport.Loading))
+        fetchPokemonReferencesUC().let { result ->
+            viewState(BackgroundState(BackgroundReport.Idle))
+            result.toPresentation { PresentationReference.Pokemon(it.id, it.name) }
+                .fold({ viewState(FailState(it)) }) {
+                    viewState(StateChange(MainReport.PokemonReferencesFetched(it.results)))
                 }
-            }
-            is ViewEvent.UserAction -> {
-                viewState(ViewState.Loading)
-                processMainEvent(event = viewEvent.event)
-            }
-            else -> Unit
         }
     }
 
-    private fun processMainEvent(event: MainEvent): ViewState<MainState> {
-        when (event) {
-            MainEvent.Continue -> TODO()
-            is MainEvent.LogIn -> TODO()
+    override suspend fun handleEvent(
+        viewEvent: ViewEvent<MainEvent>,
+        viewState: suspend (ViewState<MainReport>) -> Unit
+    ) {
+        when(viewEvent) {
+            is UserEvent -> when (viewEvent.event) {
+                MainEvent.ListEndReached -> TODO()
+                is MainEvent.PokemonSelected -> TODO()
+            }
+            is Lifecycle -> Unit
         }
+
+
     }
+
 }

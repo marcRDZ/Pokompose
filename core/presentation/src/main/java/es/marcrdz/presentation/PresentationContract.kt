@@ -1,15 +1,15 @@
 package es.marcrdz.presentation
 
-import es.marcrdz.presentation.base.Event
-import es.marcrdz.presentation.base.State
-import es.marcrdz.presentation.base.ViewEvent
-import es.marcrdz.presentation.base.ViewState
+import es.marcrdz.presentation.base.*
 
 interface PresentationContract {
-    interface StateHandler<in I: ViewEvent<Event>, out O: ViewState<State>> {
-        suspend fun handle(viewEvent: I, viewState: (O) -> Unit)
+
+    interface EventHandler<in I : ViewEvent<Event>, out O : ViewState<Report>> {
+
+        suspend fun handleInit(viewState: suspend (O) -> Unit) {}
+
+        suspend fun handleClear(viewState: suspend (O) -> Unit) {}
+
+        suspend fun handleEvent(viewEvent: I, viewState: suspend (O) -> Unit) {}
     }
 }
-
-
-
