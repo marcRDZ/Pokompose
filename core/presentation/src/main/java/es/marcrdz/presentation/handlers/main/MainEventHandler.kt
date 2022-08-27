@@ -10,11 +10,11 @@ import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.mappers.toPresentation
 import javax.inject.Inject
 
-interface MainStateHandler : PresentationContract.EventHandler<ViewEvent<MainEvent>, ViewState<MainReport>>
+interface MainEventHandler : PresentationContract.EventHandler<ViewEvent<MainEvent>, ViewState<MainReport>>
 
-class MainStateHandlerImpl @Inject constructor(
+class MainEventHandlerImpl @Inject constructor(
     @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards DomainReferencePage<DomainReference.Pokemon>>
-) : MainStateHandler {
+) : MainEventHandler {
 
     override suspend fun handleInit(viewState: suspend (ViewState<MainReport>) -> Unit) {
         viewState(BackgroundState(BackgroundReport.Loading))

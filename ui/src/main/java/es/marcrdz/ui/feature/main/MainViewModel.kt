@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.presentation.handlers.main.MainReport
-import es.marcrdz.presentation.handlers.main.MainStateHandler
+import es.marcrdz.presentation.handlers.main.MainEventHandler
 import es.marcrdz.ui.base.BaseStateHolder
 import es.marcrdz.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    handler: MainStateHandler
+    handler: MainEventHandler
 ): BaseViewModel<MainEvent, MainReport>(handler) {
 
     override val stateHolder: BaseStateHolder<MainReport> = MainStateHolder()

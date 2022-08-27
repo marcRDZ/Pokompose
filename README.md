@@ -14,9 +14,9 @@ So this architecture pattern has been translated to the the following base struc
 
 ![Pokompose project architecture](http://drive.google.com/uc?export=view&id=175NcPUgKV-NA53HgOLQETY3v7IFLkA26)
 
-Basically, its main goal is to try to decouple the **UI logic** from the framework implementation in the same way we usually do with the **Domain logic**, keeping separated the flows of actions (see `Event`), by user or OS means, and reactions (see `State`) from actual `Activity` and `ViewModel`, making more testable by doing so.
+Basically, its main goal is to try to decouple the **UI logic** from the framework implementation in the same way we usually do with the **Domain logic**, keeping separated the flows of actions (see `ViewEvent`), by user or OS means, and reactions (see `ViewState`) from actual `Activity` and `ViewModel`, making more testable by doing so.
 
-So as we work with the concepts of **UseCase** and **Repository** to abstract the business logic from the underlying use of whatever framework API or 3rd party library, this project will use a kind of intermediary between UI and Domain layers called `StateHandler`
+So as we work with the concepts of **UseCase** and **Repository** to abstract the business logic from the underlying use of whatever framework API or 3rd party library, this project will use a kind of intermediary between UI and Domain layers called `EventHandler`
 
 Let's see how it goes!
 

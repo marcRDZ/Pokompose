@@ -4,13 +4,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import es.marcrdz.presentation.handlers.main.MainStateHandler
-import es.marcrdz.presentation.handlers.main.MainStateHandlerImpl
+import es.marcrdz.presentation.handlers.main.MainEventHandler
+import es.marcrdz.presentation.handlers.main.MainEventHandlerImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class PresentationModule {
 
     @Binds
-    abstract fun bindMainStateHandler(mainStateHandler: MainStateHandlerImpl): MainStateHandler
+    abstract fun bindMainStateHandler(mainStateHandler: MainEventHandlerImpl): MainEventHandler
 }
