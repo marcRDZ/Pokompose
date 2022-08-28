@@ -5,21 +5,21 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-abstract class BaseStateHolder<in S : Report> {
+abstract class BaseStateHolder<in T : Report> {
     protected val _backgroundState: MutableSharedFlow<BackgroundReport> by lazy { MutableSharedFlow() }
     val backgroundState: SharedFlow<BackgroundReport>
         get() = _backgroundState.asSharedFlow()
-    protected val _failState: MutableSharedFlow<FailState> by lazy { MutableSharedFlow() }
-    val failState: SharedFlow<FailState>
+    protected val _failState: MutableSharedFlow<ErrorReport> by lazy { MutableSharedFlow() }
+    val failState: SharedFlow<ErrorReport>
         get() = _failState.asSharedFlow()
 
-    protected abstract suspend fun emitStateChange(state: StateChange<S>)
+    protected abstract suspend fun emitStateChangeReport(report: T)
 
-    suspend fun emit(state: ViewState<S>) {
+    suspend fun emitViewState(state: ViewState<T>) {
         when(state) {
             is BackgroundState -> _backgroundState.emit(state.report)
-            is FailState -> _failState.emit(state)
-            is StateChange -> emitStateChange(state)
+            is FailState -> _failState.emit(state.report)
+            is StateChange -> emitStateChangeReport(state.report)
         }
     }
 

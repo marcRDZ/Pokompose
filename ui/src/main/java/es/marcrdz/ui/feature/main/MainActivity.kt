@@ -14,6 +14,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,7 @@ import es.marcrdz.presentation.base.UserEvent
 import es.marcrdz.presentation.base.ViewState
 import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.handlers.main.MainEvent
+import es.marcrdz.presentation.handlers.main.MainEventHandler
 import es.marcrdz.presentation.handlers.main.MainReport
 import es.marcrdz.ui.base.BaseView
 import es.marcrdz.ui.theme.PokomposeTheme
@@ -33,7 +36,7 @@ import es.marcrdz.ui.theme.Shapes
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class MainActivity : BaseView<MainEvent, MainReport>, ComponentActivity() {
+class MainActivity : BaseView<MainEvent, MainReport, MainStateHolder, MainViewModel>, ComponentActivity() {
 
     override val viewModel: MainViewModel by viewModels()
 
@@ -54,35 +57,20 @@ class MainActivity : BaseView<MainEvent, MainReport>, ComponentActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.processViewEvent(UserEvent(MainEvent.ListEndReached))
-    }
-
     override fun initStateCollector() {
         lifecycleScope.launchWhenCreated {
-            //viewModel.stateHolder.failState.collectAsState(initial = "")
+            viewModel.stateHolder.pokemonRefs.collect {
 
-/*            viewModel.state.collect {
-                when (it) {
-                    is ViewState.Fail -> processErrorState(it.error)
-                    ViewState.Idle -> {}
-                    ViewState.Loading -> {}
-                    is ViewState.StateChange -> processViewState(it.state)
-                }
-            }*/
-        }
-    }
-
-    override fun processViewState(viewState: MainReport) {
-        when (viewState) {
-            is MainReport.PokemonReferencesFetched -> {
-                Log.d("pokemons fetched:", "${viewState.references.size}")
             }
         }
     }
 
+    override fun processViewState(viewState: MainReport) {
+        //To be removed?
+    }
+
     override fun processErrorState(errorState: ErrorReport) {
+        //To be removed?
         Log.e(MainActivity::class.simpleName, errorState.toString())
     }
 

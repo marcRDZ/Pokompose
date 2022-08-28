@@ -6,7 +6,6 @@ import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.presentation.handlers.main.MainReport
 import es.marcrdz.presentation.handlers.main.MainEventHandler
-import es.marcrdz.ui.base.BaseStateHolder
 import es.marcrdz.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,19 +13,19 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     handler: MainEventHandler
-): BaseViewModel<MainEvent, MainReport>(handler) {
+): BaseViewModel<MainEvent, MainReport, MainStateHolder>(handler) {
 
-    override val stateHolder: BaseStateHolder<MainReport> = MainStateHolder()
+    override val stateHolder: MainStateHolder = MainStateHolder()
 
     init {
         viewModelScope.launch {
-            handler.handleInit { stateHolder.emit(it) }
+            handler.handleInit { stateHolder.emitViewState(it) }
         }
     }
 
     override fun processViewEvent(viewEvent: ViewEvent<MainEvent>) {
         viewModelScope.launch {
-            handler.handleEvent(viewEvent) { stateHolder.emit(it) }
+            handler.handleEvent(viewEvent) { stateHolder.emitViewState(it) }
         }
     }
 

@@ -1,9 +1,5 @@
 package es.marcrdz.ui.feature.main
 
-import es.marcrdz.presentation.base.BackgroundState
-import es.marcrdz.presentation.base.FailState
-import es.marcrdz.presentation.base.StateChange
-import es.marcrdz.presentation.base.ViewState
 import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.handlers.main.MainReport
 import es.marcrdz.ui.base.BaseStateHolder
@@ -16,9 +12,9 @@ class MainStateHolder: BaseStateHolder<MainReport>() {
     val pokemonRefs: SharedFlow<List<PresentationReference.Pokemon>>
         get() = _pokemonRefs.asSharedFlow()
 
-    override suspend fun emitStateChange(state: StateChange<MainReport>) {
-        when(val r = state.report) {
-            is MainReport.PokemonReferencesFetched -> _pokemonRefs.emit(r.references)
+    override suspend fun emitStateChangeReport(report: MainReport) {
+        when(report) {
+            is MainReport.PokemonReferencesFetched -> _pokemonRefs.emit(report.references)
             is MainReport.PokemonReferencesSelected -> TODO()
         }
     }

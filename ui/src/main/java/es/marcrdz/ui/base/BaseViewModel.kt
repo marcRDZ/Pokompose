@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-abstract class BaseViewModel<E : Event, S : Report>(
-    val handler: PresentationContract.EventHandler<ViewEvent<E>, ViewState<S>>
+abstract class BaseViewModel<E : Event, R : Report, SH: BaseStateHolder<R>>(
+    protected val handler: PresentationContract.EventHandler<ViewEvent<E>, ViewState<R>>
 ) : ViewModel() {
 
-    internal abstract val stateHolder: BaseStateHolder<S>
+    abstract val stateHolder: SH
 
     abstract fun processViewEvent(viewEvent: ViewEvent<E>)
 }
