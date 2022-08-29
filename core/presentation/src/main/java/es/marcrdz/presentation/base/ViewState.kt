@@ -1,22 +1,20 @@
 package es.marcrdz.presentation.base
 
-sealed class ViewState<out T : Report>
+sealed class ViewState<out T : Event>
 
-class BackgroundState(val report: BackgroundReport) : ViewState<Nothing>()
-class FailState(val report: ErrorReport) : ViewState<Nothing>()
-class StateChange<out T : Report>(val report: T) : ViewState<T>()
+class BackgroundState(val event: BackgroundEvent) : ViewState<Nothing>()
+class FailState(val event: ErrorEvent) : ViewState<Nothing>()
+class StateChange<out T : Event>(val report: T) : ViewState<T>()
 
-open class Report
-
-sealed class BackgroundReport : Report() {
-    object Idle : BackgroundReport()
-    object Loading : BackgroundReport()
+sealed class BackgroundEvent : Event {
+    object Idle : BackgroundEvent()
+    object Loading : BackgroundEvent()
 }
 
-sealed class ErrorReport : Report() {
-    object Unknown : ErrorReport()
-    object NoData : ErrorReport()
-    object Network : ErrorReport()
-    object Server : ErrorReport()
-    class Exception(type: String, msg: String) : ErrorReport()
+sealed class ErrorEvent : Event {
+    object Unknown : ErrorEvent()
+    object NoData : ErrorEvent()
+    object Network : ErrorEvent()
+    object Server : ErrorEvent()
+    class Exception(type: String, msg: String) : ErrorEvent()
 }

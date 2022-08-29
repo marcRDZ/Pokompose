@@ -10,31 +10,31 @@ import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.mappers.toPresentation
 import javax.inject.Inject
 
-interface MainEventHandler : PresentationContract.EventHandler<ViewEvent<MainEvent>, ViewState<MainReport>>
+interface MainEventHandler : PresentationContract.EventHandler<ViewEvent<MainEvent.UI>, ViewState<MainEvent.Data>>
 
 class MainEventHandlerImpl @Inject constructor(
     @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards DomainReferencePage<DomainReference.Pokemon>>
 ) : MainEventHandler {
 
-    override suspend fun handleInit(viewState: suspend (ViewState<MainReport>) -> Unit) {
-        viewState(BackgroundState(BackgroundReport.Loading))
+    override suspend fun handleInit(viewState: suspend (ViewState<MainEvent.Data>) -> Unit) {
+        viewState(BackgroundState(BackgroundEvent.Loading))
         fetchPokemonReferencesUC().let { result ->
-            viewState(BackgroundState(BackgroundReport.Idle))
+            viewState(BackgroundState(BackgroundEvent.Idle))
             result.toPresentation { PresentationReference.Pokemon(it.id, it.name) }
                 .fold({ viewState(FailState(it)) }) {
-                    viewState(StateChange(MainReport.PokemonReferencesFetched(it.results)))
+                    viewState(StateChange(MainEvent.Data.PokemonReferencesFetched(it.results)))
                 }
         }
     }
 
     override suspend fun handleEvent(
-        viewEvent: ViewEvent<MainEvent>,
-        viewState: suspend (ViewState<MainReport>) -> Unit
+        viewEvent: ViewEvent<MainEvent.UI>,
+        viewState: suspend (ViewState<MainEvent.Data>) -> Unit
     ) {
         when(viewEvent) {
             is UserEvent -> when (viewEvent.event) {
-                MainEvent.ListEndReached -> TODO()
-                is MainEvent.PokemonSelected -> TODO()
+                MainEvent.UI.ListEndReached -> TODO()
+                is MainEvent.UI.PokemonSelected -> TODO()
             }
             is Lifecycle -> Unit
         }

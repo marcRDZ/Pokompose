@@ -1,10 +1,8 @@
 package es.marcrdz.presentation.base
 
-open class Event
-
 sealed class ViewEvent<out T : Event>
 
-class UserEvent<out T : Event>(val event: T) : ViewEvent<T>()
+class UserEvent<out T :Event>(val event: T) : ViewEvent<T>()
 
 sealed class Lifecycle : ViewEvent<Nothing>() {
     object OnCreate : Lifecycle()

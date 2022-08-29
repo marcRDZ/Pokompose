@@ -1,17 +1,16 @@
 package es.marcrdz.ui.base
 
-import es.marcrdz.presentation.base.ErrorReport
+import es.marcrdz.presentation.base.ErrorEvent
 import es.marcrdz.presentation.base.Event
-import es.marcrdz.presentation.base.Report
 
-interface BaseView<E : Event, R : Report, SH: BaseStateHolder<R>, VM:  BaseViewModel<E, R, SH>> {
+interface BaseView<E : Event, D : Event, SH: BaseStateHolder<D>, VM:  BaseViewModel<E, D, SH>> {
 
     val viewModel: VM
 
     fun initStateCollector()
 
-    fun processViewState(viewState: R)
+    fun processViewState(viewState: D)
 
-    fun processErrorState(errorState: ErrorReport)
+    fun processErrorState(errorState: ErrorEvent)
 
 }

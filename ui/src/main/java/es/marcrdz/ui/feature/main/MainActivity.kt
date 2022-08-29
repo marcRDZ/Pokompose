@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,20 +22,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import es.marcrdz.presentation.base.ErrorReport
-import es.marcrdz.presentation.base.UserEvent
-import es.marcrdz.presentation.base.ViewState
+import es.marcrdz.presentation.base.ErrorEvent
 import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.handlers.main.MainEvent
-import es.marcrdz.presentation.handlers.main.MainEventHandler
-import es.marcrdz.presentation.handlers.main.MainReport
 import es.marcrdz.ui.base.BaseView
+import es.marcrdz.ui.composables.ReferenceItem
+import es.marcrdz.ui.composables.ReferenceItemList
 import es.marcrdz.ui.theme.PokomposeTheme
 import es.marcrdz.ui.theme.Shapes
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class MainActivity : BaseView<MainEvent, MainReport, MainStateHolder, MainViewModel>, ComponentActivity() {
+class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, MainViewModel>,
+    ComponentActivity() {
 
     override val viewModel: MainViewModel by viewModels()
 
@@ -59,17 +56,15 @@ class MainActivity : BaseView<MainEvent, MainReport, MainStateHolder, MainViewMo
 
     override fun initStateCollector() {
         lifecycleScope.launchWhenCreated {
-            viewModel.stateHolder.pokemonRefs.collect {
 
-            }
         }
     }
 
-    override fun processViewState(viewState: MainReport) {
+    override fun processViewState(viewState: MainEvent.Data) {
         //To be removed?
     }
 
-    override fun processErrorState(errorState: ErrorReport) {
+    override fun processErrorState(errorState: ErrorEvent) {
         //To be removed?
         Log.e(MainActivity::class.simpleName, errorState.toString())
     }

@@ -4,7 +4,7 @@ import es.marcrdz.presentation.base.*
 
 interface PresentationContract {
 
-    interface EventHandler<in I : ViewEvent<Event>, out O : ViewState<Report>> {
+    interface EventHandler<in I : ViewEvent<Event>, out O : ViewState<Event>> {
 
         suspend fun handleInit(viewState: suspend (O) -> Unit) {}
 
