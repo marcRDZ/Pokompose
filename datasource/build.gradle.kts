@@ -47,6 +47,7 @@ dependencies {
     implementation(Libraries.okHttp)
     implementation(Libraries.retrofit)
     implementation(Libraries.retrofit)
+    implementation(Libraries.retrofitGsonConverter)
 
     implementation(Libraries.arrowCore)
 
