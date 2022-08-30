@@ -4,7 +4,7 @@ sealed class ViewState<out T : Event>
 
 class BackgroundState(val event: BackgroundEvent) : ViewState<Nothing>()
 class FailState(val event: ErrorEvent) : ViewState<Nothing>()
-class StateChange<out T : Event>(val report: T) : ViewState<T>()
+class StateChange<out T : Event>(val event: T) : ViewState<T>()
 
 sealed class BackgroundEvent : Event {
     object Idle : BackgroundEvent()

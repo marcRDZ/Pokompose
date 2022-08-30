@@ -13,13 +13,13 @@ abstract class BaseStateHolder<in T : Event> {
     val failState: SharedFlow<ErrorEvent>
         get() = _failState.asSharedFlow()
 
-    protected abstract suspend fun emitStateChangeReport(report: T)
+    protected abstract suspend fun emitStateChange(event: T)
 
     suspend fun emitViewState(state: ViewState<T>) {
         when(state) {
             is BackgroundState -> _backgroundState.emit(state.event)
             is FailState -> _failState.emit(state.event)
-            is StateChange -> emitStateChangeReport(state.report)
+            is StateChange -> emitStateChange(state.event)
         }
     }
 

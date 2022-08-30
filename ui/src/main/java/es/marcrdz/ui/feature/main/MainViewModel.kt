@@ -1,5 +1,6 @@
 package es.marcrdz.ui.feature.main
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.marcrdz.presentation.base.ViewEvent
@@ -18,7 +19,9 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            handler.handleInit { stateHolder.emitViewState(it) }
+            handler.handleInit {
+                stateHolder.emitViewState(it)
+            }
         }
     }
 

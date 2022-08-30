@@ -1,5 +1,6 @@
 package es.marcrdz.ui.feature.main
 
+import android.util.Log
 import es.marcrdz.presentation.domain.PresentationReference
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.ui.base.BaseStateHolder
@@ -12,9 +13,12 @@ class MainStateHolder: BaseStateHolder<MainEvent.Data>() {
     val pokemonRefs: SharedFlow<List<PresentationReference.Pokemon>>
         get() = _pokemonRefs.asSharedFlow()
 
-    override suspend fun emitStateChangeReport(report: MainEvent.Data) {
-        when(report) {
-            is MainEvent.Data.PokemonReferencesFetched -> _pokemonRefs.emit(report.references)
+    override suspend fun emitStateChange(event: MainEvent.Data) {
+        when(event) {
+            is MainEvent.Data.PokemonReferencesFetched -> {
+                Log.d(this.javaClass.simpleName, "pokemons fetched... ${event.references.size}")
+                _pokemonRefs.emit(event.references)
+            }
             is MainEvent.Data.PokemonReferencesSelected -> TODO()
         }
     }
