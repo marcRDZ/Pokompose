@@ -45,6 +45,7 @@ dependencies {
     implementation(Libraries.kotlinCoroutinesCore)
 
     implementation(Libraries.okHttp)
+    implementation(Libraries.okHttpInterceptor)
     implementation(Libraries.retrofit)
     implementation(Libraries.retrofit)
     implementation(Libraries.retrofitGsonConverter)
