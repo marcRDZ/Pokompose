@@ -3,10 +3,12 @@ package es.marcrdz.ui.feature.main
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import es.marcrdz.presentation.base.UserEvent
 import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.presentation.handlers.main.MainEventHandler
 import es.marcrdz.ui.base.BaseViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,15 +21,15 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            handler.handleInit {
+            handler.handleInit().collect {
                 stateHolder.emitViewState(it)
             }
         }
     }
 
-    override fun processViewEvent(viewEvent: ViewEvent<MainEvent.UI>) {
+    override fun processViewEvent(viewEvent: UserEvent<MainEvent.UI>) {
         viewModelScope.launch {
-            handler.handleEvent(viewEvent) { stateHolder.emitViewState(it) }
+            handler.handleEvent(viewEvent).collect { stateHolder.emitViewState(it) }
         }
     }
 

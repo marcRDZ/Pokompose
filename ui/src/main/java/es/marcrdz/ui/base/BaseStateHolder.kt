@@ -1,5 +1,6 @@
 package es.marcrdz.ui.base
 
+import androidx.compose.runtime.Composable
 import es.marcrdz.presentation.base.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

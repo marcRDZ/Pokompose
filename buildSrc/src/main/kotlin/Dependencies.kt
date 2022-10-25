@@ -79,6 +79,9 @@ object TestLibraries {
         const val junit4 = "4.13.2"
         const val androidJunit = "1.1.3"
         const val espresso = "3.4.0"
+        const val mockk = "1.12.1"
+        const val turbine = "0.7.0"
+        const val coroutineTest = "1.4.3"
     }
 
     const val junit4 = "junit:junit:${Versions.junit4}"
@@ -86,5 +89,8 @@ object TestLibraries {
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val composeUIJunit4 = "androidx.compose.ui:ui-test-junit4:${AndroidBuildConfig.composeVersion}"
     const val hiltAndroid = "com.google.dagger:hilt-android-testing:${BuildPlugins.Versions.hilt}"
-
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val mockkCommon = "io.mockk:mockk-common:${Versions.mockk}"
+    const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
+    const val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineTest}"
 }

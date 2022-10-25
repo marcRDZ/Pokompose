@@ -1,13 +1,13 @@
 package es.marcrdz.data
 
 import arrow.core.Either
-import es.marcrdz.data.domain.DataError
-import es.marcrdz.data.domain.DataReference
-import es.marcrdz.data.domain.DataReferencePage
+import es.marcrdz.domain.domain.ErrorDO
+import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.ReferencePageDO
 
 interface DataContract {
 
     interface PokemonDataSource {
-        suspend fun fetchPokemonReferences(offset: Int, limit: Int): Either<DataError, DataReferencePage<DataReference.Pokemon>>
+        suspend fun fetchPokemonReferences(offset: Int, limit: Int): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
     }
 }

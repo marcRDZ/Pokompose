@@ -1,45 +1,42 @@
 package es.marcrdz.presentation.handlers.main
 
-import es.marcrdz.domain.domain.DomainReference
-import es.marcrdz.domain.domain.DomainReferencePage
+import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.ReferencePageDO
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUseCase
 import es.marcrdz.domain.usecases.UseCase
 import es.marcrdz.presentation.PresentationContract
 import es.marcrdz.presentation.base.*
-import es.marcrdz.presentation.domain.PresentationReference
-import es.marcrdz.presentation.mappers.toPresentation
+import es.marcrdz.presentation.mappers.toErrorEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-interface MainEventHandler : PresentationContract.EventHandler<ViewEvent<MainEvent.UI>, ViewState<MainEvent.Data>>
+interface MainEventHandler : PresentationContract.EventFlowHandler<UserEvent<MainEvent.UI>, ViewState<MainEvent.Data>>
 
 class MainEventHandlerImpl @Inject constructor(
-    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards DomainReferencePage<DomainReference.Pokemon>>
+    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<ReferenceDO.Pokemon>>
 ) : MainEventHandler {
 
-    override suspend fun handleInit(viewState: suspend (ViewState<MainEvent.Data>) -> Unit) {
-        viewState(BackgroundState(BackgroundEvent.Loading))
+    override suspend fun handleInit(): Flow<ViewState<MainEvent.Data>> = loadReferences()
+
+    override suspend fun handleClear(): Flow<ViewState<MainEvent.Data>> = flow {  }
+
+    override suspend fun handleEvent(viewEvent: UserEvent<MainEvent.UI>): Flow<ViewState<MainEvent.Data>> =
+        when (viewEvent.event) {
+            MainEvent.UI.ListEndReached -> loadReferences()
+            is MainEvent.UI.PokemonSelected -> flow {  }
+        }
+
+    private fun loadReferences() = flow {
+        emit(BackgroundState(BackgroundEvent.Loading))
         fetchPokemonReferencesUC().let { result ->
-            viewState(BackgroundState(BackgroundEvent.Idle))
-            result.toPresentation { PresentationReference.Pokemon(it.id, it.name) }
-                .fold({ viewState(FailState(it)) }) {
-                    viewState(StateChange(MainEvent.Data.PokemonReferencesFetched(it.results)))
+            emit(BackgroundState(BackgroundEvent.Idle))
+            result
+                .mapLeft { it.toErrorEvent() }
+                .fold({ emit(FailState(it)) }) {
+                    emit(StateChange(MainEvent.Data.PokemonReferencesFetched(it.results)))
                 }
         }
-    }
-
-    override suspend fun handleEvent(
-        viewEvent: ViewEvent<MainEvent.UI>,
-        viewState: suspend (ViewState<MainEvent.Data>) -> Unit
-    ) {
-        when(viewEvent) {
-            is UserEvent -> when (viewEvent.event) {
-                MainEvent.UI.ListEndReached -> TODO()
-                is MainEvent.UI.PokemonSelected -> TODO()
-            }
-            is Lifecycle -> Unit
-        }
-
-
     }
 
 }

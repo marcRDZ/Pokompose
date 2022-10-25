@@ -2,11 +2,10 @@ package es.marcrdz.data.repositories
 
 import arrow.core.Either
 import es.marcrdz.data.DataContract
-import es.marcrdz.data.mappers.toDomain
 import es.marcrdz.domain.DomainContract
-import es.marcrdz.domain.domain.DomainError
-import es.marcrdz.domain.domain.DomainReference
-import es.marcrdz.domain.domain.DomainReferencePage
+import es.marcrdz.domain.domain.ErrorDO
+import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.ReferencePageDO
 import javax.inject.Inject
 
 class PokemonRepository @Inject constructor(
@@ -16,7 +15,7 @@ class PokemonRepository @Inject constructor(
     override suspend fun fetchPokemonReferences(
         offset: Int,
         limit: Int
-    ): Either<DomainError, DomainReferencePage<DomainReference.Pokemon>> =
-        remoteDataSource.fetchPokemonReferences(offset, limit).toDomain { DomainReference.Pokemon(it.id, it.name) }
+    ): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>> =
+        remoteDataSource.fetchPokemonReferences(offset, limit)
 
 }

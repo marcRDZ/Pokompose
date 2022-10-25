@@ -11,8 +11,16 @@ java {
 
 dependencies {
     api(project(":core:domain"))
+
     implementation(Libraries.hilt)
     kapt(Libraries.hiltCompiler)
+
     implementation(Libraries.arrowCore)
+    implementation(Libraries.kotlinCoroutinesCore)
+
+    testImplementation(TestLibraries.junit4)
+    testImplementation(TestLibraries.mockk)
+    testImplementation(TestLibraries.mockkCommon)
+    testImplementation(TestLibraries.coroutineTest)
 
 }
