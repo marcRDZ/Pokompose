@@ -30,7 +30,6 @@ class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, Mai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initStateCollector()
         setContent {
             PokomposeTheme {
                 // A surface container using the 'background' color from the theme
@@ -43,21 +42,6 @@ class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, Mai
             }
         }
 
-    }
-
-    override fun initStateCollector() {
-        lifecycleScope.launchWhenCreated {
-            //To be removed?
-        }
-    }
-
-    override fun processViewState(viewState: MainEvent.Data) {
-        //To be removed?
-    }
-
-    override fun processErrorState(errorState: ErrorEvent) {
-        //To be removed?
-        Log.e(MainActivity::class.simpleName, errorState.toString())
     }
 
 }

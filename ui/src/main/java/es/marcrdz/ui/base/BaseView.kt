@@ -7,10 +7,4 @@ interface BaseView<E : Event, D : Event, SH: BaseStateHolder<D>, VM:  BaseViewMo
 
     val viewModel: VM
 
-    fun initStateCollector()
-
-    fun processViewState(viewState: D)
-
-    fun processErrorState(errorState: ErrorEvent)
-
 }
