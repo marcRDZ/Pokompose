@@ -1,6 +1,9 @@
 package es.marcrdz.presentation
 
-import es.marcrdz.presentation.base.*
+import es.marcrdz.presentation.base.Event
+import es.marcrdz.presentation.base.UserEvent
+import es.marcrdz.presentation.base.ViewEvent
+import es.marcrdz.presentation.base.ViewState
 import kotlinx.coroutines.flow.Flow
 
 interface PresentationContract {

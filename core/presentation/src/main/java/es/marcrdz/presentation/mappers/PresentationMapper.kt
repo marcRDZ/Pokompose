@@ -1,9 +1,6 @@
 package es.marcrdz.presentation.mappers
 
-import arrow.core.Either
 import es.marcrdz.domain.domain.ErrorDO
-import es.marcrdz.domain.domain.ReferenceDO
-import es.marcrdz.domain.domain.ReferencePageDO
 import es.marcrdz.presentation.base.ErrorEvent
 
 fun ErrorDO.toErrorEvent(): ErrorEvent = when(this) {

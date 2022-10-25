@@ -10,9 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import me.sargunvohra.lib.pokekotlin.client.ClientConfig
 import me.sargunvohra.lib.pokekotlin.client.KCPokeApi
 import me.sargunvohra.lib.pokekotlin.client.KCPokeApiClient
-import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)

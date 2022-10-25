@@ -1,10 +1,8 @@
 package es.marcrdz.ui.feature.main
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.marcrdz.presentation.base.UserEvent
-import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.presentation.handlers.main.MainEventHandler
 import es.marcrdz.ui.base.BaseViewModel
