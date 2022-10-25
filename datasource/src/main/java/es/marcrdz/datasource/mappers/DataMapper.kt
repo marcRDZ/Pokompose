@@ -5,6 +5,7 @@ import es.marcrdz.domain.domain.ErrorDO
 import es.marcrdz.domain.domain.ReferenceDO
 import es.marcrdz.domain.domain.ReferencePageDO
 import me.sargunvohra.lib.pokekotlin.model.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 fun PokeApiError.toErrorDO(): ErrorDO = when (this) {
     is HttpError -> when (code) {
@@ -22,9 +23,14 @@ fun <T : ReferenceDO> Either<PokeApiError, NamedApiResourceList>.toDomain(
     { it.toErrorDO() }, { it.toReferenceDO(transform) }
 )
 
-fun <T : ReferenceDO> NamedApiResourceList.toReferenceDO(transform: (NamedApiResource) -> T) = ReferencePageDO(
-    count = this.count,
-    next = this.next,
-    previous = this.previous,
-    results = this.results.map { transform(it) }
-)
+fun <T : ReferenceDO> NamedApiResourceList.toReferenceDO(
+    transform: (NamedApiResource) -> T
+): ReferencePageDO<T> {
+    val nextPage = this.next?.toHttpUrlOrNull()
+    return ReferencePageDO(
+        count = this.count,
+        offset = nextPage?.queryParameter("offset")?.toIntOrNull() ?: 0,
+        limit = nextPage?.queryParameter("limit")?.toIntOrNull() ?: 0,
+        results = this.results.map { transform(it) }
+    )
+}

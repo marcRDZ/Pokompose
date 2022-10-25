@@ -8,6 +8,19 @@ import es.marcrdz.domain.domain.ReferencePageDO
 interface DataContract {
 
     interface PokemonDataSource {
-        suspend fun fetchPokemonReferences(offset: Int, limit: Int): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
+
+        interface Cache {
+            suspend fun getPokemonReferences(): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
+            suspend fun cachePokemonReferencesPage(
+                page: ReferencePageDO<ReferenceDO.Pokemon>
+            ): ReferencePageDO<ReferenceDO.Pokemon>
+        }
+
+        interface Remote {
+            suspend fun fetchPokemonReferences(
+                offset: Int,
+                limit: Int = 20
+            ): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
+        }
     }
 }

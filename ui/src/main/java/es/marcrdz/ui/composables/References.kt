@@ -51,8 +51,8 @@ fun <T : ReferenceDO> ReferenceItemPage(
             ReferenceItem(id = it.id, name = it.name, modifier)
         }
         item {
-            LaunchedEffect(refs.next) {
-                onListEndReached(refs.next)
+            LaunchedEffect(refs.offset) {
+                onListEndReached("${refs.offset}")
             }
         }
     }

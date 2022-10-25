@@ -8,6 +8,6 @@ import es.marcrdz.domain.domain.ReferencePageDO
 interface DomainContract {
 
     interface PokemonRepository {
-        suspend fun fetchPokemonReferences(offset: Int = 0, limit: Int = 0): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
+        suspend fun fetchPokemonReferences(): Either<ErrorDO, ReferencePageDO<ReferenceDO.Pokemon>>
     }
 }

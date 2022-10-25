@@ -15,7 +15,7 @@ sealed class ReferenceDO(val id: Int, val name: String) {
 
 data class ReferencePageDO<T: ReferenceDO>(
     val count: Int,
-    val next: String?,
-    val previous: String?,
+    val offset: Int,
+    val limit: Int,
     val results: List<T>
 )

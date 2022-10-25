@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class PokemonRemoteDataSource @Inject constructor(
     private val pokeApi: KCPokeApi
-): DataContract.PokemonDataSource {
+): DataContract.PokemonDataSource.Remote {
 
     override suspend fun fetchPokemonReferences(
         offset: Int,
