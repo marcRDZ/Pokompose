@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":core:domain"))
+    api(project(":core:domain"))
     implementation(Libraries.hilt)
     kapt(Libraries.hiltCompiler)
     implementation(Libraries.arrowCore)
