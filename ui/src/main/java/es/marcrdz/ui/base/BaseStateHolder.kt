@@ -6,19 +6,19 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 abstract class BaseStateHolder<in T : Event> {
-    protected val _backgroundState: MutableSharedFlow<BackgroundEvent> by lazy { MutableSharedFlow() }
-    val backgroundState: SharedFlow<BackgroundEvent>
+    private val _backgroundState: MutableSharedFlow<BackgroundState> by lazy { MutableSharedFlow() }
+    val backgroundState: SharedFlow<BackgroundState>
         get() = _backgroundState.asSharedFlow()
-    protected val _failState: MutableSharedFlow<ErrorEvent> by lazy { MutableSharedFlow() }
-    val failState: SharedFlow<ErrorEvent>
+    private val _failState: MutableSharedFlow<FailState> by lazy { MutableSharedFlow() }
+    val failState: SharedFlow<FailState>
         get() = _failState.asSharedFlow()
 
     protected abstract suspend fun emitStateChange(event: T)
 
     suspend fun emitViewState(state: ViewState<T>) {
         when(state) {
-            is BackgroundState -> _backgroundState.emit(state.event)
-            is FailState -> _failState.emit(state.event)
+            is BackgroundState -> _backgroundState.emit(state)
+            is FailState -> _failState.emit(state)
             is StateChange -> emitStateChange(state.event)
         }
     }
