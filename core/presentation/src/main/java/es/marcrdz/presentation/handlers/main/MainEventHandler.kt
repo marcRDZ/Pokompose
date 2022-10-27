@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-interface MainEventHandler : PresentationContract.EventFlowHandler<UserEvent<MainEvent.UI>, ViewState<MainEvent.Data>>
+interface MainEventHandler : PresentationContract.EventFlowHandler<MainEvent.UI, MainEvent.Data>
 
 class MainEventHandlerImpl @Inject constructor(
     @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<ReferenceDO.Pokemon>>
@@ -20,6 +20,8 @@ class MainEventHandlerImpl @Inject constructor(
     override suspend fun handleInit(): Flow<ViewState<MainEvent.Data>> = loadReferences()
 
     override suspend fun handleClear(): Flow<ViewState<MainEvent.Data>> = flow {  }
+
+    override suspend fun handleLifecycle(viewEvent: LifecycleEvent): Flow<ViewState<MainEvent.Data>> = flow {  }
 
     override suspend fun handleEvent(viewEvent: UserEvent<MainEvent.UI>): Flow<ViewState<MainEvent.Data>> =
         when (viewEvent.event) {

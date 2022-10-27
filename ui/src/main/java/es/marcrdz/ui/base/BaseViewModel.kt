@@ -7,10 +7,8 @@ import es.marcrdz.presentation.base.UserEvent
 import es.marcrdz.presentation.base.ViewState
 
 abstract class BaseViewModel<E : Event, D : Event, SH: BaseStateHolder<D>>(
-    protected val handler: PresentationContract.EventFlowHandler<UserEvent<E>, ViewState<D>>
+    protected val handler: PresentationContract.EventFlowHandler<E, D>
 ) : ViewModel() {
 
     abstract val stateHolder: SH
-
-    abstract fun processViewEvent(viewEvent: UserEvent<E>)
 }
