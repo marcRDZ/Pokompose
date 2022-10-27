@@ -22,12 +22,17 @@ class MainViewModel @Inject constructor(
             handler.handleInit().collect {
                 stateHolder.emitViewState(it)
             }
-        }
-    }
 
-    override fun processViewEvent(viewEvent: UserEvent<MainEvent.UI>) {
+        }
         viewModelScope.launch {
-            handler.handleEvent(viewEvent).collect { stateHolder.emitViewState(it) }
+            stateHolder.viewEvents.collect { event ->
+                when(event) {
+                    is UserEvent ->  handler.handleEvent(event).collect { state ->
+                        stateHolder.emitViewState(state)
+                    }
+                    else -> Unit
+                }
+            }
         }
     }
 

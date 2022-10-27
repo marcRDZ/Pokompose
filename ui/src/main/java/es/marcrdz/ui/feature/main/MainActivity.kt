@@ -49,11 +49,11 @@ class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, Mai
 fun DefaultPreview() {
     PokomposeTheme {
         ReferenceItemList(
-            refs =
-            listOf(
+            refs = listOf(
                 ReferenceDO.Berry(0, "Apple"),
                 ReferenceDO.Berry(0, "Strawberry")
-            )
+            ),
+            onEndReached = {}
         )
     }
 }
