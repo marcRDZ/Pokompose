@@ -3,7 +3,7 @@ const val kotlinVersion = "1.5.21"
 object BuildPlugins {
 
     object Versions {
-        const val gradle = "7.1.2"
+        const val gradle = "7.3.1"
         const val hilt = "2.41"
     }
 
