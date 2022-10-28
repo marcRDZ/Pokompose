@@ -1,10 +1,10 @@
-const val kotlinVersion = "1.5.21"
+const val kotlinVersion = "1.7.10"
 
 object BuildPlugins {
 
     object Versions {
         const val gradle = "7.3.1"
-        const val hilt = "2.41"
+        const val hilt = "2.44"
     }
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.gradle}"
@@ -22,10 +22,10 @@ object BuildPlugins {
 object AndroidBuildConfig {
 
     const val minSdk = 21
-    const val compileSdk = 31
+    const val compileSdk = 33
     const val targetSdk = compileSdk
 
-    const val composeVersion = "1.0.2"
+    const val composeVersion = "1.3.0"
 
     const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
