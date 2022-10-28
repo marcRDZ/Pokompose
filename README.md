@@ -1,7 +1,6 @@
 
-# Another interpretation of Clean Architecture for Android
+# Another approach to Clean Architecture for Android
 
-This project wants to provide a practical approach to this well-known architecture applied to Android development.
 
 As we already know the basic diagram for this architecture pattern as you had seen in many sites is something like the following:
 ![Clean Architecture diagram](http://drive.google.com/uc?export=view&id=1eX61zh9UinkJEnvi1T3PvDpsJXy2FRT9)
@@ -27,7 +26,7 @@ I gather here all the things I've been learning through my latest working experi
 
 Although I'm not working currently with [Jetpack Compose](https://developer.android.com/jetpack/compose) I've created this project on top of such feature as I'm learning by the way.
 
-To provide a wide domain for use case examples the project deals with the well known Poke API through a forked version of [Pokekotlin](https://github.com/marcRDZ/pokekotlin) with additional features.
+To provide a wide domain for use case examples the project deals with the well known Poke API through my own forked version of [Pokekotlin](https://github.com/marcRDZ/pokekotlin) with additional features.
 
 Let's see how it goes!
 
