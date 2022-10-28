@@ -42,6 +42,7 @@ object Libraries {
         const val okHttp = "4.9.3"
         const val retrofit = "2.9.0"
         const val arrow = "0.11.0"
+        const val landScapist = "2.0.2"
     }
 
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktx}"
@@ -66,11 +67,14 @@ object Libraries {
 
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
+
     const val composeUI = "androidx.compose.ui:ui:${AndroidBuildConfig.composeVersion}"
     const val composeMaterial = "androidx.compose.material:material:${AndroidBuildConfig.composeVersion}"
     const val composeUIToolingPreview = "androidx.compose.ui:ui-tooling-preview:${AndroidBuildConfig.composeVersion}"
     const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
     const val composeUITooling = "androidx.compose.ui:ui-tooling:${AndroidBuildConfig.composeVersion}"
+
+    const val landScapist = "com.github.skydoves:landscapist-glide:${Versions.landScapist}"
 }
 
 object TestLibraries {
@@ -93,4 +97,5 @@ object TestLibraries {
     const val mockkCommon = "io.mockk:mockk-common:${Versions.mockk}"
     const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
     const val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineTest}"
+
 }

@@ -12,5 +12,7 @@ java {
 dependencies {
     implementation(Libraries.hilt)
     kapt(Libraries.hiltCompiler)
+    
     implementation(Libraries.arrowCore)
+    implementation(Libraries.kotlinStdLib)
 }

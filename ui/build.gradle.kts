@@ -57,6 +57,7 @@ dependencies {
     implementation(Libraries.composeUIToolingPreview)
     implementation(Libraries.ktxLifecycle)
     implementation(Libraries.composeActivity)
+    implementation(Libraries.landScapist)
 
 
     // For local unit tests
