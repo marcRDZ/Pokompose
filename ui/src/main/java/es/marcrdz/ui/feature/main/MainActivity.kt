@@ -42,18 +42,3 @@ class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, Mai
     }
 
 }
-
-
-@Preview(showBackground = true, device = Devices.NEXUS_5)
-@Composable
-fun DefaultPreview() {
-    PokomposeTheme {
-        ReferenceItemList(
-            refs = listOf(
-                ReferenceDO.Berry(0, "Apple"),
-                ReferenceDO.Berry(0, "Strawberry")
-            ),
-            onEndReached = {}
-        )
-    }
-}

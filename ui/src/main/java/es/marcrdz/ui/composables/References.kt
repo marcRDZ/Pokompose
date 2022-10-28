@@ -1,5 +1,6 @@
 package es.marcrdz.ui.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,12 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.glide.GlideImage
 import es.marcrdz.domain.domain.ReferenceDO
-import es.marcrdz.ui.theme.BlackAlpha
-import es.marcrdz.ui.theme.PokeGray
-import es.marcrdz.ui.theme.PokeRed
-import es.marcrdz.ui.theme.Shapes
+import es.marcrdz.ui.R
+import es.marcrdz.ui.theme.*
 
 
 @Composable
@@ -48,7 +53,7 @@ fun ReferenceItemList(
 fun ReferenceItem(item: ReferenceDO, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .wrapContentHeight()
+            .height(128.dp)
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 2.dp)
             .background(
@@ -56,14 +61,51 @@ fun ReferenceItem(item: ReferenceDO, modifier: Modifier = Modifier) {
                 shape = Shapes.medium
             ),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Bottom
     ) {
-        Text(text = item.name, modifier = Modifier.padding(all = 12.dp), color = BlackAlpha)
+        (item as? ReferenceDO.Pokemon)?.let {
+            Column(
+                modifier = modifier
+                    .padding(all = 12.dp)
+                    .width(128.dp)
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                GlideImage(
+                    imageModel = { it.imgUri },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.FillBounds
+                    ),
+                    loading = {
+                        Icon(
+                            painterResource(id = R.drawable.ic_pokeball_outlined),
+                            contentDescription = "pokeball icon"
+                        )
+                    }
+                )
+            }
+        }
+        Text(
+            text = item.name.replaceFirstChar { it.uppercase() },
+            modifier = modifier
+                .padding(all = 12.dp),
+            color = BlackAlpha
+        )
         Icon(
             imageVector = Icons.Sharp.ArrowForward,
             contentDescription = "go to detail",
             tint = PokeRed,
             modifier = Modifier.padding(all = 12.dp)
         )
+    }
+}
+
+
+@Preview(showBackground = true, heightDp = 400, widthDp = 720)
+@Composable
+fun DefaultPreview() {
+    PokomposeTheme {
+        ReferenceItem( ReferenceDO.Pokemon(0, "Bulbasaur"))
     }
 }

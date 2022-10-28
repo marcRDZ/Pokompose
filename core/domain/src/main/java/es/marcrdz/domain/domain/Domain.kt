@@ -9,7 +9,11 @@ sealed class ErrorDO {
 }
 
 sealed class ReferenceDO(val id: Int, val name: String) {
-    class Pokemon(id: Int, name: String) : ReferenceDO(id, name)
+    class Pokemon(
+        id: Int,
+        name: String,
+        val imgUri: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png"
+    ) : ReferenceDO(id, name)
     class Berry(id: Int, name: String) : ReferenceDO(id, name)
 }
 

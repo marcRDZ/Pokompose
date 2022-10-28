@@ -3,5 +3,7 @@
 
     <style name="Theme.Pokompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/poke_red</item>
+        <item name="android:windowBackground">@color/poke_red</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 </resources>
