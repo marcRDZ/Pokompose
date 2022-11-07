@@ -1,6 +1,6 @@
 package es.marcrdz.presentation.handlers.main
 
-import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.domain.domain.ReferencePageDO
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUseCase
 import es.marcrdz.domain.usecases.UseCase
@@ -14,7 +14,7 @@ import javax.inject.Inject
 interface MainEventHandler : PresentationContract.EventFlowHandler<MainEvent.UI, MainEvent.Data>
 
 class MainEventHandlerImpl @Inject constructor(
-    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<ReferenceDO.Pokemon>>
+    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<PokemonRefDO.Entity>>
 ) : MainEventHandler {
 
     override suspend fun handleInit(): Flow<ViewState<MainEvent.Data>> = loadReferences()

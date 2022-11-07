@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import es.marcrdz.presentation.base.UserEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.ui.composables.PokeScaffold
-import es.marcrdz.ui.composables.ReferenceItemList
+import es.marcrdz.ui.composables.PokemonRefItemList
 import es.marcrdz.ui.feature.main.MainStateHolder
 import kotlinx.coroutines.CoroutineScope
 
@@ -23,7 +23,7 @@ fun MainContent(
 
     PokeScaffold(stateHolder = stateHolder, modifier = modifier) {
         val pokeRefs by stateHolder.pokemonRefs.collectAsState(initial = emptyList())
-        ReferenceItemList(
+        PokemonRefItemList(
             refs = pokeRefs,
             modifier = modifier.padding(it),
             onEndReached = { stateHolder.emitViewEvent(UserEvent(MainEvent.UI.ListEndReached)) }

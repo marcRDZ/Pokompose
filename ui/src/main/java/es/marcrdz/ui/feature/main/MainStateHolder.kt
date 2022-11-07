@@ -1,6 +1,6 @@
 package es.marcrdz.ui.feature.main
 
-import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.presentation.base.ViewEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
 import es.marcrdz.ui.base.BaseStateHolder
@@ -13,8 +13,8 @@ class MainStateHolder : BaseStateHolder<MainEvent.Data>() {
     val viewEvents: SharedFlow<ViewEvent<MainEvent.UI>>
         get() = _viewEvents.asSharedFlow()
 
-    private val _pokemonRefs: MutableSharedFlow<List<ReferenceDO.Pokemon>> by lazy { MutableSharedFlow() }
-    val pokemonRefs: SharedFlow<List<ReferenceDO.Pokemon>>
+    private val _pokemonRefs: MutableSharedFlow<List<PokemonRefDO.Entity>> by lazy { MutableSharedFlow() }
+    val pokemonRefs: SharedFlow<List<PokemonRefDO.Entity>>
         get() = _pokemonRefs.asSharedFlow()
 
     override suspend fun emitStateChange(event: MainEvent.Data) {
