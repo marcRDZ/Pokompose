@@ -16,6 +16,6 @@ class FetchPokemonReferencesUc @Inject constructor(
 ): UseCase<@JvmSuppressWildcards Any, @JvmSuppressWildcards ReferencePageDO<PokemonRefDO.Entity>> {
 
     override suspend fun invoke(param: Any?): Either<ErrorDO,  ReferencePageDO<PokemonRefDO.Entity>> =
-        pokemonRepository.fetchPokemonReferences()
+        pokemonRepository.getOrFetchPokemonReferencesPaginated()
 
 }

@@ -1,7 +1,9 @@
 package es.marcrdz.presentation.handlers.main
 
+import es.marcrdz.domain.domain.PokemonDO
 import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.domain.domain.ReferencePageDO
+import es.marcrdz.domain.usecases.FetchPokemonByIdUseCase
 import es.marcrdz.domain.usecases.FetchPokemonReferencesUseCase
 import es.marcrdz.domain.usecases.UseCase
 import es.marcrdz.presentation.PresentationContract
@@ -14,27 +16,37 @@ import javax.inject.Inject
 interface MainEventHandler : PresentationContract.EventFlowHandler<MainEvent.UI, MainEvent.Data>
 
 class MainEventHandlerImpl @Inject constructor(
-    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<PokemonRefDO.Entity>>
+    @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<PokemonRefDO.Entity>>,
+    @FetchPokemonByIdUseCase private val fetchPokemonByIdUc: UseCase<@JvmSuppressWildcards Int, @JvmSuppressWildcards PokemonDO>
 ) : MainEventHandler {
 
     override suspend fun handleInit(): Flow<ViewState<MainEvent.Data>> = loadReferences()
 
-    override suspend fun handleClear(): Flow<ViewState<MainEvent.Data>> = flow {  }
+    override suspend fun handleClear(): Flow<ViewState<MainEvent.Data>> = flow { }
 
     override suspend fun handleLifecycle(viewEvent: LifecycleEvent): Flow<ViewState<MainEvent.Data>> = flow {  }
 
     override suspend fun handleEvent(viewEvent: UserEvent<MainEvent.UI>): Flow<ViewState<MainEvent.Data>> =
         when (viewEvent.event) {
             MainEvent.UI.ListEndReached -> loadReferences()
-            is MainEvent.UI.PokemonSelected -> flow {  }
+            is MainEvent.UI.PokemonSelected -> flow {
+                emit(BackgroundState.Loading)
+                fetchPokemonByIdUc(param = viewEvent.event.pokemonRef.id).let { result ->
+                    emit(BackgroundState.Idle)
+                    result.mapLeft { it.toFailState() }
+                        .fold({ emit(it) }) {
+                            emit(StateChange(MainEvent.Data.PokemonReferencesSelected(it)))
+                        }
+
+                }
+            }
         }
 
     private fun loadReferences() = flow {
         emit(BackgroundState.Loading)
         fetchPokemonReferencesUC().let { result ->
             emit(BackgroundState.Idle)
-            result
-                .mapLeft { it.toFailState() }
+            result.mapLeft { it.toFailState() }
                 .fold({ emit(it) }) {
                     emit(StateChange(MainEvent.Data.PokemonReferencesFetched(it.results)))
                 }
