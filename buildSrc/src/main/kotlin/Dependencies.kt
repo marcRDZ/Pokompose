@@ -33,16 +33,19 @@ object AndroidBuildConfig {
 object Libraries {
 
     private object Versions {
-        const val ktx = "1.7.0"
-        const val ktxLifecycle = "2.3.1"
+        const val ktx = "1.9.0"
+        const val ktxLifecycle = "2.5.1"
         const val appCompat = "1.3.1"
         const val material = "1.4.0"
-        const val composeActivity = "1.3.1"
+        const val composeActivity = "1.6.1"
+        const val composeLifecycleViewModel = "2.5.1"
+        const val composeNavigation = "2.5.3"
+        const val hiltComposeNavigation = "1.0.0"
         const val coroutines = "1.3.9"
         const val okHttp = "4.9.3"
         const val retrofit = "2.9.0"
         const val arrow = "0.11.0"
-        const val landScapist = "2.0.2"
+        const val landScapist = "2.0.3"
     }
 
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktx}"
@@ -64,15 +67,17 @@ object Libraries {
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${BuildPlugins.Versions.hilt}"
     const val hilt = "com.google.dagger:hilt-core:${BuildPlugins.Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-compiler:${BuildPlugins.Versions.hilt}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltComposeNavigation}"
 
-    const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-    const val material = "com.google.android.material:material:${Versions.material}"
-
-    const val composeUI = "androidx.compose.ui:ui:${AndroidBuildConfig.composeVersion}"
     const val composeMaterial = "androidx.compose.material:material:${AndroidBuildConfig.composeVersion}"
-    const val composeUIToolingPreview = "androidx.compose.ui:ui-tooling-preview:${AndroidBuildConfig.composeVersion}"
     const val composeActivity = "androidx.activity:activity-compose:${Versions.composeActivity}"
+    const val composeUI = "androidx.compose.ui:ui:${AndroidBuildConfig.composeVersion}"
     const val composeUITooling = "androidx.compose.ui:ui-tooling:${AndroidBuildConfig.composeVersion}"
+    const val composeUIToolingPreview = "androidx.compose.ui:ui-tooling-preview:${AndroidBuildConfig.composeVersion}"
+    const val composeRuntime = "androidx.compose.runtime:runtime:${AndroidBuildConfig.composeVersion}"
+    const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:${Versions.composeNavigation}"
+    const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+    const val composeLifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.composeLifecycleViewModel}"
 
     const val landScapist = "com.github.skydoves:landscapist-glide:${Versions.landScapist}"
 }
