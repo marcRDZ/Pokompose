@@ -15,7 +15,7 @@ import es.marcrdz.ui.composables.main.MainContent
 import es.marcrdz.ui.theme.PokomposeTheme
 
 @AndroidEntryPoint
-class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainStateHolder, MainViewModel>,
+class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainViewModel>,
     ComponentActivity() {
 
     override val viewModel: MainViewModel by viewModels()

@@ -6,23 +6,33 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import es.marcrdz.presentation.base.BackgroundState
 import es.marcrdz.presentation.base.UserEvent
 import es.marcrdz.presentation.handlers.main.MainEvent
+import es.marcrdz.ui.base.BaseStateHolder
 import es.marcrdz.ui.composables.PokeScaffold
 import es.marcrdz.ui.composables.PokemonRefItemList
-import es.marcrdz.ui.feature.main.MainStateHolder
 import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
 fun MainContent(
-    stateHolder: MainStateHolder,
+    stateHolder: BaseStateHolder<MainEvent.UI, MainEvent.Data>,
     modifier: Modifier = Modifier,
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
 
-    PokeScaffold(stateHolder = stateHolder, modifier = modifier) {
-        val pokeRefs by stateHolder.pokemonRefs.collectAsState(initial = emptyList())
+    val fail by stateHolder.failState.collectAsState(initial = null)
+    val loading by stateHolder.backgroundState.collectAsState(initial = BackgroundState.Idle)
+    val pokeRefs = stateHolder.viewState.collectAsState(initial = null).let {
+        (it.value?.event as? MainEvent.Data.PokemonReferencesFetched)?.references ?: emptyList()
+    }
+
+    PokeScaffold(
+        backgroundState = loading,
+        failState = fail,
+        modifier = modifier
+    ) {
         PokemonRefItemList(
             refs = pokeRefs,
             modifier = modifier.padding(it),

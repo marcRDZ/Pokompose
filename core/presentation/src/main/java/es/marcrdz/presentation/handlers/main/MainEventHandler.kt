@@ -20,13 +20,13 @@ class MainEventHandlerImpl @Inject constructor(
     @FetchPokemonByIdUseCase private val fetchPokemonByIdUc: UseCase<@JvmSuppressWildcards Int, @JvmSuppressWildcards PokemonDO>
 ) : MainEventHandler {
 
-    override suspend fun handleInit(): Flow<ViewState<MainEvent.Data>> = loadReferences()
+    override suspend fun handleInit(): Flow<UIState<MainEvent.Data>> = loadReferences()
 
-    override suspend fun handleClear(): Flow<ViewState<MainEvent.Data>> = flow { }
+    override suspend fun handleClear(): Flow<UIState<MainEvent.Data>> = flow { }
 
-    override suspend fun handleLifecycle(viewEvent: LifecycleEvent): Flow<ViewState<MainEvent.Data>> = flow {  }
+    override suspend fun handleLifecycle(viewEvent: LifecycleEvent): Flow<UIState<MainEvent.Data>> = flow {  }
 
-    override suspend fun handleEvent(viewEvent: UserEvent<MainEvent.UI>): Flow<ViewState<MainEvent.Data>> =
+    override suspend fun handleEvent(viewEvent: UserEvent<MainEvent.UI>): Flow<UIState<MainEvent.Data>> =
         when (viewEvent.event) {
             MainEvent.UI.ListEndReached -> loadReferences()
             is MainEvent.UI.PokemonSelected -> flow {
@@ -35,7 +35,7 @@ class MainEventHandlerImpl @Inject constructor(
                     emit(BackgroundState.Idle)
                     result.mapLeft { it.toFailState() }
                         .fold({ emit(it) }) {
-                            emit(StateChange(MainEvent.Data.PokemonReferencesSelected(it)))
+                            emit(ViewState(MainEvent.Data.PokemonReferencesSelected(it)))
                         }
 
                 }
@@ -48,7 +48,7 @@ class MainEventHandlerImpl @Inject constructor(
             emit(BackgroundState.Idle)
             result.mapLeft { it.toFailState() }
                 .fold({ emit(it) }) {
-                    emit(StateChange(MainEvent.Data.PokemonReferencesFetched(it.results)))
+                    emit(ViewState(MainEvent.Data.PokemonReferencesFetched(it.results)))
                 }
         }
     }
