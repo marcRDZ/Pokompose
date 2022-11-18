@@ -53,10 +53,16 @@ dependencies {
 
     implementation(Libraries.ktxCore)
     implementation(Libraries.composeUI)
-    implementation(Libraries.composeMaterial)
-    implementation(Libraries.composeUIToolingPreview)
-    implementation(Libraries.ktxLifecycle)
+    implementation(Libraries.composeRuntime)
+    implementation(Libraries.navigationRuntime)
     implementation(Libraries.composeActivity)
+    implementation(Libraries.composeMaterial)
+    implementation(Libraries.composeUITooling)
+    implementation(Libraries.composeUIToolingPreview)
+    implementation(Libraries.composeLifecycleViewModel)
+    implementation(Libraries.ktxLifecycle)
+    implementation(Libraries.composeNavigation)
+    implementation(Libraries.hiltNavigationCompose)
     implementation(Libraries.landScapist)
 
 
@@ -71,5 +77,4 @@ dependencies {
     androidTestImplementation(TestLibraries.composeUIJunit4)
     androidTestImplementation(TestLibraries.hiltAndroid)
     kaptTest(Libraries.hiltCompiler)
-    debugImplementation(Libraries.composeUITooling)
 }

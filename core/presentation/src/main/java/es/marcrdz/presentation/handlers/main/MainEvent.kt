@@ -1,15 +1,16 @@
 package es.marcrdz.presentation.handlers.main
 
-import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.PokemonDO
+import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.presentation.base.Event
 
 sealed class MainEvent {
     sealed class UI : Event {
         object ListEndReached : UI()
-        class PokemonSelected(val pokemonRef: ReferenceDO.Pokemon) : UI()
+        class PokemonSelected(val pokemonRef: PokemonRefDO.Entity) : UI()
     }
     sealed class Data: Event {
-        class PokemonReferencesFetched(val references: List<ReferenceDO.Pokemon>) : Data()
-        class PokemonReferencesSelected(val reference: ReferenceDO.Pokemon) : Data()
+        class PokemonReferencesFetched(val references: List<PokemonRefDO.Entity>) : Data()
+        class PokemonReferencesSelected(val pokemon: PokemonDO) : Data()
     }
 }

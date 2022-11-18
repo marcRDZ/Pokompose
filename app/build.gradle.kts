@@ -60,16 +60,18 @@ dependencies {
     implementation(Libraries.ktxCore)
     implementation(Libraries.ktxLifecycle)
 
-    implementation(Libraries.composeUI)
-    implementation(Libraries.composeMaterial)
-    implementation(Libraries.composeUIToolingPreview)
-    implementation(Libraries.composeActivity)
-
-    testImplementation(TestLibraries.junit4)
-    androidTestImplementation(TestLibraries.androidJunit)
-    androidTestImplementation(TestLibraries.espresso)
-    androidTestImplementation(TestLibraries.composeUIJunit4)
-    debugImplementation(Libraries.composeUITooling)
+    implementation(Libraries.composeRuntime)
+//
+//    implementation(Libraries.composeUI)
+//    implementation(Libraries.composeMaterial)
+//    implementation(Libraries.composeUIToolingPreview)
+//    implementation(Libraries.composeActivity)
+//
+//    testImplementation(TestLibraries.junit4)
+//    androidTestImplementation(TestLibraries.androidJunit)
+//    androidTestImplementation(TestLibraries.espresso)
+//    androidTestImplementation(TestLibraries.composeUIJunit4)
+//    debugImplementation(Libraries.composeUITooling)
 
 }
 

@@ -1,6 +1,5 @@
 package es.marcrdz.ui.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,19 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
-import es.marcrdz.domain.domain.ReferenceDO
+import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.ui.R
 import es.marcrdz.ui.theme.*
 
 
 @Composable
-fun ReferenceItemList(
-    refs: List<ReferenceDO>,
+fun PokemonRefItemList(
+    refs: List<PokemonRefDO.Entity>,
     onEndReached: suspend () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -37,7 +35,7 @@ fun ReferenceItemList(
     ) {
         refs.takeIf { it.isNotEmpty() }?.let {
             items(count = refs.size) { index ->
-                ReferenceItem(item = refs[index], modifier)
+                PokemonRefItem(item = refs[index], modifier)
             }
             item {
                 LaunchedEffect(refs.size) {
@@ -50,7 +48,7 @@ fun ReferenceItemList(
 }
 
 @Composable
-fun ReferenceItem(item: ReferenceDO, modifier: Modifier = Modifier) {
+fun PokemonRefItem(item: PokemonRefDO.Entity, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .height(128.dp)
@@ -63,7 +61,7 @@ fun ReferenceItem(item: ReferenceDO, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
-        (item as? ReferenceDO.Pokemon)?.let {
+        (item as? PokemonRefDO.Entity)?.let {
             Column(
                 modifier = modifier
                     .padding(all = 12.dp)
@@ -106,6 +104,6 @@ fun ReferenceItem(item: ReferenceDO, modifier: Modifier = Modifier) {
 @Composable
 fun DefaultPreview() {
     PokomposeTheme {
-        ReferenceItem( ReferenceDO.Pokemon(0, "Bulbasaur"))
+        PokemonRefItem( PokemonRefDO.Entity(0, "Bulbasaur"))
     }
 }

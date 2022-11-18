@@ -1,10 +1,10 @@
 package es.marcrdz.presentation.base
 
-sealed class ViewEvent<out T : Event>
+sealed class UIEvent<out T : Event>
 
-class UserEvent<out T :Event>(val event: T) : ViewEvent<T>()
+class UserEvent<out T :Event>(val event: T) : UIEvent<T>()
 
-sealed class LifecycleEvent : ViewEvent<Nothing>() {
+sealed class LifecycleEvent : UIEvent<Nothing>() {
     object OnCreate : LifecycleEvent()
     object OnCreateView : LifecycleEvent()
     object OnViewCreated : LifecycleEvent()

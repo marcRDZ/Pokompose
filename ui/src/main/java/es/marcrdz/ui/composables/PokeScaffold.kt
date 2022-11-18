@@ -14,22 +14,22 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import es.marcrdz.presentation.base.BackgroundState
 import es.marcrdz.presentation.base.Event
+import es.marcrdz.presentation.base.FailState
 import es.marcrdz.ui.R
 import es.marcrdz.ui.base.BaseStateHolder
 import es.marcrdz.ui.theme.BlackAlpha
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun <T : Event> PokeScaffold(
-    stateHolder: BaseStateHolder<T>,
+fun PokeScaffold(
+    backgroundState: BackgroundState,
+    failState: FailState?,
     modifier: Modifier = Modifier,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
-    val fail by stateHolder.failState.collectAsState(initial = null)
-    val loading by stateHolder.backgroundState.collectAsState(initial = BackgroundState.Idle)
 
-    fail?.let {
+    failState?.let {
         LaunchedEffect(scaffoldState.snackbarHostState) {
             scaffoldState.snackbarHostState.showSnackbar(
                 message = "Error message",
@@ -57,7 +57,7 @@ fun <T : Event> PokeScaffold(
         }
     ) {
         content(it)
-        PokeBallLoadingDialog(state = loading)
+        PokeBallLoadingDialog(state = backgroundState)
     }
 }
 
