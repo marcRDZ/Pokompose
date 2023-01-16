@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
+ */
+
 package es.marcrdz.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme

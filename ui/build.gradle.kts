@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
+ */
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)

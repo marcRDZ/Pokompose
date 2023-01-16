@@ -1,24 +1,22 @@
+/*
+ * Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
+ */
+
 package es.marcrdz.ui.feature.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import es.marcrdz.presentation.handlers.main.MainEvent
-import es.marcrdz.ui.base.BaseView
-import es.marcrdz.ui.composables.main.MainContent
 import es.marcrdz.ui.theme.PokomposeTheme
 
 @AndroidEntryPoint
-class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainViewModel>,
-    ComponentActivity() {
-
-    override val viewModel: MainViewModel by viewModels()
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +27,9 @@ class MainActivity : BaseView<MainEvent.UI, MainEvent.Data, MainViewModel>,
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainContent(stateHolder = viewModel.stateHolder)
+                    MainScreen(
+                        viewModel = hiltViewModel()
+                    )
                 }
             }
         }

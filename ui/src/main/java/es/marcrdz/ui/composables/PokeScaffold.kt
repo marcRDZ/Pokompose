@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
+ */
+
 package es.marcrdz.ui.composables
 
 import androidx.compose.foundation.background
@@ -27,8 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import es.marcrdz.presentation.base.BackgroundState
-import es.marcrdz.presentation.base.FailState
+import es.marcrdz.domain.domain.ErrorDO
+import es.marcrdz.presentation.domain.BackgroundState
 import es.marcrdz.ui.R
 import es.marcrdz.ui.theme.BlackAlpha
 import kotlinx.coroutines.launch
@@ -36,28 +40,23 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokeScaffold(
-    backgroundState: BackgroundState,
-    failState: FailState?,
+    isLoading: Boolean,
+    error: ErrorDO?,
     modifier: Modifier = Modifier,
-    onFailure: (FailState) -> Unit = {},
+    onFailure: (ErrorDO) -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val snackBarHostState: SnackbarHostState = remember { SnackbarHostState() }
-
     val coroutineScope = rememberCoroutineScope()
 
-    failState?.let { fail ->
+    error?.let { fail ->
         coroutineScope.launch {
             val state = snackBarHostState.showSnackbar(
                 message = "Something went wrong!",
                 actionLabel = "Retry"
             )
 
-            state.takeIf {
-                it == SnackbarResult.ActionPerformed
-            }?.let {
-                onFailure(fail)
-            }
+            state.takeIf { it == SnackbarResult.ActionPerformed }?.let { onFailure(fail) }
         }
     }
 
@@ -81,13 +80,13 @@ fun PokeScaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) {
         content(it)
-        PokeBallLoadingDialog(state = backgroundState)
+        PokeBallLoadingDialog(isLoading = isLoading)
     }
 }
 
 @Composable
-fun PokeBallLoadingDialog(state: BackgroundState, modifier: Modifier = Modifier) {
-    if (state is BackgroundState.Loading) {
+fun PokeBallLoadingDialog(isLoading: Boolean, modifier: Modifier = Modifier) =
+    isLoading.takeIf { it }?.let {
         Dialog(
             onDismissRequest = { /*TODO*/ },
             DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
@@ -101,5 +100,4 @@ fun PokeBallLoadingDialog(state: BackgroundState, modifier: Modifier = Modifier)
                 CircularProgressIndicator()
             }
         }
-    }
-}
+    } ?: Unit

@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
+  -->
+
 <resources>
     <string name="app_name">Pokompose</string>
     <string name="generic_failure">Oops… something went wrong!</string>
