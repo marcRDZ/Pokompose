@@ -24,9 +24,6 @@ fun MainContent(
 
     val fail by stateHolder.failState.collectAsState(initial = null)
     val loading by stateHolder.backgroundState.collectAsState(initial = BackgroundState.Idle)
-    val pokeRefs = stateHolder.viewState.collectAsState(initial = null).let {
-        (it.value?.event as? MainEvent.Data.PokemonReferencesFetched)?.references ?: emptyList()
-    }
 
     PokeScaffold(
         backgroundState = loading,
@@ -34,9 +31,10 @@ fun MainContent(
         modifier = modifier
     ) {
         PokemonRefItemList(
-            refs = pokeRefs,
+            refs = emptyList(),
             modifier = modifier.padding(it),
-            onEndReached = { stateHolder.emitViewEvent(UserEvent(MainEvent.UI.ListEndReached)) }
+            onEndReached = { /*stateHolder.emitViewEvent(UserEvent(MainEvent.UI.PokemonSelected(0)))*/ },
+            onItemSelected = {}
         )
     }
 }

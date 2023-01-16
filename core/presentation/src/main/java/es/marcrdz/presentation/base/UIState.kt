@@ -1,5 +1,7 @@
 package es.marcrdz.presentation.base
 
+import es.marcrdz.presentation.domain.Destiny
+
 sealed class UIState<out T : Event>
 
 sealed class BackgroundState : UIState<Nothing>() {
@@ -17,4 +19,4 @@ sealed class FailState : UIState<Nothing>() {
 
 class ViewState<out T : Event>(val event: T) : UIState<T>()
 
-class NavState<out T : Event>(val event: T) : UIState<T>()
+class NavState(val event: Destiny) : UIState<Nothing>()

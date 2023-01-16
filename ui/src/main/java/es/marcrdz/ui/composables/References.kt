@@ -1,6 +1,7 @@
 package es.marcrdz.ui.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
@@ -25,7 +26,8 @@ import es.marcrdz.ui.theme.*
 @Composable
 fun PokemonRefItemList(
     refs: List<PokemonRefDO.Entity>,
-    onEndReached: suspend () -> Unit,
+    onEndReached: () -> Unit,
+    onItemSelected: (PokemonRefDO.Entity) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -35,7 +37,9 @@ fun PokemonRefItemList(
     ) {
         refs.takeIf { it.isNotEmpty() }?.let {
             items(count = refs.size) { index ->
-                PokemonRefItem(item = refs[index], modifier)
+                PokemonRefItem(item = refs[index], modifier) {
+                    onItemSelected(it)
+                }
             }
             item {
                 LaunchedEffect(refs.size) {
@@ -48,7 +52,11 @@ fun PokemonRefItemList(
 }
 
 @Composable
-fun PokemonRefItem(item: PokemonRefDO.Entity, modifier: Modifier = Modifier) {
+fun PokemonRefItem(
+    item: PokemonRefDO.Entity,
+    modifier: Modifier = Modifier,
+    onItemSelected: (PokemonRefDO.Entity) -> Unit
+) {
     Row(
         modifier = modifier
             .height(128.dp)
@@ -57,7 +65,8 @@ fun PokemonRefItem(item: PokemonRefDO.Entity, modifier: Modifier = Modifier) {
             .background(
                 color = PokeGray,
                 shape = Shapes.medium
-            ),
+            )
+            .clickable { onItemSelected(item) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom
     ) {
@@ -104,6 +113,6 @@ fun PokemonRefItem(item: PokemonRefDO.Entity, modifier: Modifier = Modifier) {
 @Composable
 fun DefaultPreview() {
     PokomposeTheme {
-        PokemonRefItem( PokemonRefDO.Entity(0, "Bulbasaur"))
+        PokemonRefItem( PokemonRefDO.Entity(0, "Bulbasaur")) {}
     }
 }
