@@ -1,29 +1,30 @@
 plugins {
-    id(BuildPlugins.androidApplication)
-    id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.hilt)
-    id(BuildPlugins.kapt)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    compileSdk = AndroidBuildConfig.compileSdk
+    namespace = "es.marcrdz.pokompose"
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "es.marcrdz.pokompose"
-        minSdk = AndroidBuildConfig.minSdk
-        targetSdk = AndroidBuildConfig.targetSdk
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
-        named("release").configure {
+        release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -36,17 +37,12 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    buildFeatures {
-        compose = true
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = AndroidBuildConfig.composeVersion
-    }
-
-    packagingOptions {
-        resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
-    }
 }
 
 dependencies {
@@ -54,27 +50,7 @@ dependencies {
     implementation(project(":ui"))
     implementation(project(":datasource"))
 
-    implementation(Libraries.hiltAndroid)
-    kapt(Libraries.hiltAndroidCompiler)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
-    implementation(Libraries.ktxCore)
-    implementation(Libraries.ktxLifecycle)
-
-    implementation(Libraries.composeRuntime)
-//
-//    implementation(Libraries.composeUI)
-//    implementation(Libraries.composeMaterial)
-//    implementation(Libraries.composeUIToolingPreview)
-//    implementation(Libraries.composeActivity)
-//
-//    testImplementation(TestLibraries.junit4)
-//    androidTestImplementation(TestLibraries.androidJunit)
-//    androidTestImplementation(TestLibraries.espresso)
-//    androidTestImplementation(TestLibraries.composeUIJunit4)
-//    debugImplementation(Libraries.composeUITooling)
-
-}
-
-kapt {
-    correctErrorTypes = true
 }

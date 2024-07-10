@@ -1,80 +1,76 @@
 plugins {
-    id(BuildPlugins.androidLibrary)
-    id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.hilt)
-    id(BuildPlugins.kapt)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    compileSdk = AndroidBuildConfig.compileSdk
+    namespace = "es.marcrdz.ui"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = AndroidBuildConfig.minSdk
-        targetSdk = AndroidBuildConfig.targetSdk
-
-        testInstrumentationRunner = AndroidBuildConfig.testRunner
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = 24
         vectorDrawables {
             useSupportLibrary = true
         }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        named("release").configure {
+        release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-
     buildFeatures {
         compose = true
     }
-
     composeOptions {
-        kotlinCompilerExtensionVersion = AndroidBuildConfig.composeVersion
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
 }
 
 dependencies {
 
-    implementation(project(":core:presentation"))
+    api(project(":core:presentation"))
 
-    implementation(Libraries.hiltAndroid)
-    kapt(Libraries.hiltAndroidCompiler)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
 
-    implementation(Libraries.ktxCore)
-    implementation(Libraries.composeUI)
-    implementation(Libraries.composeRuntime)
-    implementation(Libraries.navigationRuntime)
-    implementation(Libraries.composeActivity)
-    implementation(Libraries.composeMaterial)
-    implementation(Libraries.composeUITooling)
-    implementation(Libraries.composeUIToolingPreview)
-    implementation(Libraries.composeLifecycleViewModel)
-    implementation(Libraries.ktxLifecycle)
-    implementation(Libraries.composeNavigation)
-    implementation(Libraries.hiltNavigationCompose)
-    implementation(Libraries.landScapist)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.coil.kt)
+    implementation(libs.coil.compose)
+    implementation(libs.landscapist.glide)
 
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-    // For local unit tests
-    testImplementation(TestLibraries.junit4)
-    testImplementation(TestLibraries.hiltAndroid)
-    kaptTest(Libraries.hiltCompiler)
-
-    // For instrumentation tests
-    androidTestImplementation(TestLibraries.androidJunit)
-    androidTestImplementation(TestLibraries.espresso)
-    androidTestImplementation(TestLibraries.composeUIJunit4)
-    androidTestImplementation(TestLibraries.hiltAndroid)
-    kaptTest(Libraries.hiltCompiler)
 }

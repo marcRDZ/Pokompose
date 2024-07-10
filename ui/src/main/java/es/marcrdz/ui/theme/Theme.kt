@@ -1,20 +1,20 @@
 package es.marcrdz.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
     primary = PokeRed,
-    primaryVariant = PokeRedLight,
+    inversePrimary = PokeRedLight,
     secondary = BlackAlpha
 )
 
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
     primary = PokeRed,
-    primaryVariant = PokeRedLight,
+    inversePrimary = PokeRedLight,
     secondary = PokeGray
 
     /* Other default colors to override
@@ -36,7 +36,7 @@ fun PokomposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
         shapes = Shapes,
         content = content

@@ -1,17 +1,24 @@
 plugins {
-    id(BuildPlugins.javaLibrary)
-    kotlin(BuildPlugins.jvm)
-    id(BuildPlugins.kapt)
+    id("java-library")
+    alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.ksp)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
+
     api(project(":core:domain"))
-    implementation(Libraries.hilt)
-    kapt(Libraries.hiltCompiler)
-    implementation(Libraries.arrowCore)
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.arrow.core)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlin.coroutines.test)
+
 }

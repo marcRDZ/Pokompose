@@ -1,25 +1,30 @@
 plugins {
-    id(BuildPlugins.androidLibrary)
-    id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.hilt)
-    id(BuildPlugins.kapt)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    compileSdk = AndroidBuildConfig.compileSdk
+    namespace = "es.marcrdz.datasource"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = AndroidBuildConfig.minSdk
-        targetSdk = AndroidBuildConfig.targetSdk
+        minSdk = 24
 
-        testInstrumentationRunner = AndroidBuildConfig.testRunner
+        buildFeatures.buildConfig = true
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        named("release").configure {
+        release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -35,32 +40,23 @@ android {
 }
 
 dependencies {
+
     implementation(project(":core:data"))
     implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
 
-    implementation(Libraries.hiltAndroid)
-    kapt(Libraries.hiltAndroidCompiler)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
-    implementation(Libraries.ktxCore)
-    implementation(Libraries.kotlinCoroutinesCore)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson.converter)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.interceptor)
+    implementation(libs.arrow.core)
 
-    implementation(Libraries.okHttp)
-    implementation(Libraries.okHttpInterceptor)
-    implementation(Libraries.retrofit)
-    implementation(Libraries.retrofit)
-    implementation(Libraries.retrofitGsonConverter)
-
-    implementation(Libraries.arrowCore)
-
-    // For local unit tests
-    testImplementation(TestLibraries.junit4)
-    testImplementation(TestLibraries.hiltAndroid)
-    kaptTest(Libraries.hiltCompiler)
-
-    // For instrumentation tests
-    androidTestImplementation(TestLibraries.androidJunit)
-    androidTestImplementation(TestLibraries.espresso)
-    androidTestImplementation(TestLibraries.hiltAndroid)
-    kaptTest(Libraries.hiltCompiler)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
 }

@@ -1,16 +1,8 @@
-buildscript {
-    dependencies {
-        classpath(BuildPlugins.hiltGradlePlugin)
-    }
-}
-
 plugins {
-    id(BuildPlugins.androidApplication) version BuildPlugins.Versions.gradle apply false
-    id(BuildPlugins.androidLibrary) version BuildPlugins.Versions.gradle apply false
-    id(BuildPlugins.kotlinAndroid) version kotlinVersion apply false
-    kotlin(BuildPlugins.jvm) version kotlinVersion apply false
-}
-
-tasks.register("clean").configure {
-    delete("build")
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt.gradle) apply false
 }

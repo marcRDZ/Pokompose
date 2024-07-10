@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8">
-      <module name="Pokompose.app" target="11" />
-      <module name="Pokompose.buildSrc" target="11" />
-      <module name="Pokompose.buildSrc.main" target="11" />
-      <module name="Pokompose.buildSrc.test" target="11" />
-      <module name="Pokompose.datasource" target="11" />
-      <module name="Pokompose.ui" target="11" />
+    <bytecodeTargetLevel target="17">
+      <module name="Pokompose.buildSrc" target="17" />
+      <module name="Pokompose.buildSrc.main" target="17" />
+      <module name="Pokompose.buildSrc.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
