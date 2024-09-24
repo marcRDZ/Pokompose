@@ -15,12 +15,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -32,9 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import es.marcrdz.domain.domain.ErrorDO
-import es.marcrdz.presentation.domain.BackgroundState
 import es.marcrdz.ui.R
-import es.marcrdz.ui.theme.BlackAlpha
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,8 +74,14 @@ fun PokeScaffold(
                         Spacer(Modifier.width(16.dp))
                         Text(stringResource(id = R.string.app_name))
                     }
-
-                }
+                },
+                colors = TopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    scrolledContainerColor = MaterialTheme.colorScheme.inversePrimary,
+                )
             )
         },
         snackbarHost = { SnackbarHost(snackBarHostState) }
@@ -91,11 +98,9 @@ fun PokeBallLoadingDialog(isLoading: Boolean, modifier: Modifier = Modifier) =
             onDismissRequest = { /*TODO*/ },
             DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
         ) {
-            Box(
+            OutlinedCard(
                 modifier = modifier
                     .size(128.dp)
-                    .background(BlackAlpha, shape = RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
             }

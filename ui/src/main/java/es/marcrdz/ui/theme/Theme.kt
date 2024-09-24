@@ -9,17 +9,34 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColorScheme(
-    primary = PokeRed,
-    inversePrimary = PokeRedLight,
-    secondary = BlackAlpha
+    primary = PokeRed800,
+    onPrimary = PokeGray200,
+    primaryContainer = PokeGray600,
+    onPrimaryContainer = PokeRed900,
+    inversePrimary = PokeRed400,
+    secondary = PokeBlue100,
+    secondaryContainer = PokeBlue50,
+    tertiary = PokeYellow50,
+    outline = PokeRed800,
+    surface = PokeGray400,
+    background = PokeGray900
 )
 
 private val LightColorPalette = lightColorScheme(
-    primary = PokeRed,
-    inversePrimary = PokeRedLight,
-    secondary = PokeGray
+    primary = PokeRed400,
+    onPrimary = Color.White,
+    primaryContainer = PokeGray200,
+    onPrimaryContainer = PokeRed600,
+    inversePrimary = PokeRed800,
+    secondary = PokeBlue900,
+    secondaryContainer = PokeBlue800,
+    tertiary = PokeYellow400,
+    outline = PokeRed400,
+    surface = PokeGray200,
+    background = PokeGray50
 
     /* Other default colors to override
     background = Color.White,

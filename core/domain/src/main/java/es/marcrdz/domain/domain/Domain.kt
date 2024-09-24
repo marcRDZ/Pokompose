@@ -5,10 +5,10 @@
 package es.marcrdz.domain.domain
 
 sealed class ErrorDO {
-    object Unknown : ErrorDO()
-    object Network : ErrorDO()
-    object NoData : ErrorDO()
-    object Server : ErrorDO()
+    data object Unknown : ErrorDO()
+    data object Network : ErrorDO()
+    data object NoData : ErrorDO()
+    data object Server : ErrorDO()
     data class Exception(val code: String, val msg: String) : ErrorDO()
 }
 

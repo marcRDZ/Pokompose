@@ -64,7 +64,6 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
     implementation(libs.coil.kt)
     implementation(libs.coil.compose)
-    implementation(libs.landscapist.glide)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
