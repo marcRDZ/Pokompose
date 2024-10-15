@@ -17,7 +17,16 @@ interface ReferenceDO {
     val name: String
 }
 
-data class SpriteDO(val url: String)
+data class SpriteDO(
+    val backDefault: String,
+    val backShiny: String,
+    val frontDefault: String,
+    val frontShiny: String,
+    val backFemale: String,
+    val backShinyFemale: String,
+    val frontFemale: String,
+    val frontShinyFemale: String
+)
 
 data class ReferencePageDO<T: ReferenceDO>(
     val count: Int,
@@ -34,7 +43,6 @@ sealed class PokemonRefDO(
     class Entity(
         id: Int,
         name: String,
-        val imgUri: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png"
     ) : PokemonRefDO(id, name)
 
     class Species(
@@ -135,16 +143,26 @@ data class PokemonMoveVersionDO(
     val levelLearnedAt: Int
 )
 
-data class PokemonSpritesDO(
-    val backDefault: SpriteDO,
-    val backShiny: SpriteDO,
-    val frontDefault: SpriteDO,
-    val frontShiny: SpriteDO,
-    val backFemale: SpriteDO,
-    val backShinyFemale: SpriteDO,
-    val frontFemale: SpriteDO,
-    val frontShinyFemale: SpriteDO
-)
+class PokemonSpriteUrlBuilder {
+    companion object {
+        private const val URL: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon"
+        private var path: String = "/"
+        private var other: String = ""
+        private var mimeType: String = ".png"
+
+        fun shiny() = apply { path = "${path}shiny/" }
+        fun back() = apply { path = "${path}back/" }
+        fun female() = apply { path = "${path}female/" }
+        fun dreamWorld() = apply { other = "/other/dream-world" }
+        fun home() = apply { other = "/other/home" }
+        fun officialArtwork() = apply { other = "/other/official-artwork" }
+        fun showdown() = apply { other = "/other/showdown" }
+        fun svg() = apply { mimeType = ".svg" }
+        fun png() = apply { mimeType = ".png" }
+
+        fun build(id: Int): String = "$URL$other$path$id$mimeType"
+    }
+}
 
 data class PokemonDO(
     val id: Int,
@@ -161,6 +179,5 @@ data class PokemonDO(
     val heldItems: List<PokemonHeldItemDO>,
     val moves: List<PokemonMoveDO>,
     val stats: List<PokemonStatDO>,
-    val types: List<PokemonTypeDO>,
-    val sprites: PokemonSpritesDO
+    val types: List<PokemonTypeDO>
 )

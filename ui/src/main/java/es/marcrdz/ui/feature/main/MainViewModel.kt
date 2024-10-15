@@ -22,14 +22,6 @@ class MainViewModel @Inject constructor(
     handler = handler
 ) {
 
-    init {
-        viewModelScope.launch {
-            handler.handleInit().collect() {
-                processState(it)
-            }
-        }
-    }
-
     override fun onEvent(event: MainEvent) {
         viewModelScope.launch {
             handler.handleEvent(event).collect() {

@@ -10,10 +10,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import es.marcrdz.presentation.handlers.main.MainEventHandler
 import es.marcrdz.presentation.handlers.main.MainEventHandlerImpl
-import es.marcrdz.presentation.handlers.pokemon_detail.PokemonDetailHandler
-import es.marcrdz.presentation.handlers.pokemon_detail.PokemonDetailHandlerImpl
-import es.marcrdz.presentation.handlers.pokemon_refs.PokemonRefsHandler
-import es.marcrdz.presentation.handlers.pokemon_refs.PokemonRefsHandlerImpl
+import es.marcrdz.presentation.handlers.pokemon.PokemonHandler
+import es.marcrdz.presentation.handlers.pokemon.PokemonHandlerImpl
+import es.marcrdz.presentation.handlers.poke_refs.PokemonRefsHandler
+import es.marcrdz.presentation.handlers.poke_refs.PokemonRefsHandlerImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,6 +26,6 @@ abstract class PresentationModule {
     abstract fun bindPokemonRefsHandler(handler: PokemonRefsHandlerImpl): PokemonRefsHandler
 
     @Binds
-    abstract fun bindPokemonDetailHandler(handler: PokemonDetailHandlerImpl): PokemonDetailHandler
+    abstract fun bindPokemonDetailHandler(handler: PokemonHandlerImpl): PokemonHandler
 
 }

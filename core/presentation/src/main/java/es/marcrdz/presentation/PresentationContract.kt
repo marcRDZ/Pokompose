@@ -13,8 +13,6 @@ interface PresentationContract {
 
     interface EventFlowHandler<in I : Event, out O : Data> {
 
-        suspend fun handleInit(): Flow<UIState<O>>
-
         suspend fun handleEvent(event: I): Flow<UIState<O>>
 
     }

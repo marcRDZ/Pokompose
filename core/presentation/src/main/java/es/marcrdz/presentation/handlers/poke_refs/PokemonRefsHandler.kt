@@ -2,7 +2,7 @@
  * Copyright (c) 2024.  All credits and comments to marcos.rdgz.dz@gmail.com
  */
 
-package es.marcrdz.presentation.handlers.pokemon_refs
+package es.marcrdz.presentation.handlers.poke_refs
 
 import es.marcrdz.domain.domain.PokemonDO
 import es.marcrdz.domain.domain.PokemonRefDO
@@ -27,22 +27,19 @@ class PokemonRefsHandlerImpl @Inject constructor(
     @FetchPokemonByIdUseCase private val fetchPokemonByIdUc: UseCase<@JvmSuppressWildcards Int, @JvmSuppressWildcards PokemonDO>
 ) : PokemonRefsHandler {
 
-    override suspend fun handleInit(): Flow<UIState<PokemonRefsData>> = loadReferences()
-
     override suspend fun handleEvent(event: PokemonRefsEvent): Flow<UIState<PokemonRefsData>> =
         when (event) {
-            PokemonRefsEvent.OnEndListReached -> loadReferences()
+            PokemonRefsEvent.OnInit,
+            PokemonRefsEvent.OnEndListReached -> flow {
+                emit(BackgroundState.Loading)
+                fetchPokemonReferencesUC().let { result ->
+                    emit(BackgroundState.Idle)
+                    result.fold({ emit(FailState(error = it)) }) {
+                        emit(DataState(PokemonRefsData(references = it.results)))
+                    }
+                }
+            }
             is PokemonRefsEvent.OnPokemonSelected -> flow {}
         }
-
-    private fun loadReferences() = flow {
-        emit(BackgroundState.Loading)
-        fetchPokemonReferencesUC().let { result ->
-            emit(BackgroundState.Idle)
-            result.fold({ emit(FailState(error = it)) }) {
-                emit(DataState(PokemonRefsData(references = it.results)))
-            }
-        }
-    }
 
 }

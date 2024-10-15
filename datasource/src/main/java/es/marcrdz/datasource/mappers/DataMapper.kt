@@ -120,19 +120,6 @@ val pokemonTypeDO: (PokemonType) -> PokemonTypeDO = {
     )
 }
 
-val pokemonSpritesDO: (PokemonSprites) -> PokemonSpritesDO = {
-    PokemonSpritesDO(
-        backDefault = SpriteDO(it.backDefault.orEmpty()),
-        backShiny = SpriteDO(it.backShiny.orEmpty()),
-        frontDefault = SpriteDO(it.frontDefault.orEmpty()),
-        frontShiny = SpriteDO(it.frontShiny.orEmpty()),
-        backFemale = SpriteDO(it.backFemale.orEmpty()),
-        backShinyFemale = SpriteDO(it.backShinyFemale.orEmpty()),
-        frontFemale = SpriteDO(it.frontFemale.orEmpty()),
-        frontShinyFemale = SpriteDO(it.frontShinyFemale.orEmpty())
-    )
-}
-
 val pokemonDO: (Pokemon) -> PokemonDO = {
     PokemonDO(
         id = it.id,
@@ -149,8 +136,7 @@ val pokemonDO: (Pokemon) -> PokemonDO = {
         heldItems = it.heldItems.map(pokemonHeldItemDO),
         moves = it.moves.map(pokemonMoveDO),
         stats = it.stats.map(pokemonStatDO),
-        types = it.types.map(pokemonTypeDO),
-        sprites = pokemonSpritesDO(it.sprites)
+        types = it.types.map(pokemonTypeDO)
     )
 }
 

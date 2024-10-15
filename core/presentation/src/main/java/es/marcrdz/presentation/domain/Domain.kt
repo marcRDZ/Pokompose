@@ -5,8 +5,6 @@
 package es.marcrdz.presentation.domain
 
 import es.marcrdz.domain.domain.ErrorDO
-import es.marcrdz.domain.domain.PokemonRefDO
-
 
 interface Event
 
@@ -22,11 +20,3 @@ sealed class BackgroundState : UIState<Nothing>() {
 data class FailState(val error: ErrorDO) : UIState<Nothing>()
 
 data class DataState<out T : Data>(val data: T) : UIState<T>()
-
-sealed class Destiny(
-    val id: String
-) {
-    data object PokemonRefs: Destiny("pokemon_refs")
-    data class PokemonDetail(val pokeRef: PokemonRefDO.Entity): Destiny("pokemon_detail")
-
-}

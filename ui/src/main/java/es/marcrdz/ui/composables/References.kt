@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.imageLoader
 import es.marcrdz.domain.domain.PokemonRefDO
+import es.marcrdz.domain.domain.PokemonSpriteUrlBuilder
 import es.marcrdz.ui.R
 import es.marcrdz.ui.theme.PokomposeTheme
 
@@ -89,7 +90,7 @@ fun PokemonRefItem(
             AsyncImage(
                 modifier = Modifier
                     .fillMaxHeight(),
-                model = item.imgUri,
+                model = PokemonSpriteUrlBuilder.build(item.id),
                 placeholder = painterResource(R.drawable.ic_pokeball_outlined),
                 contentScale = ContentScale.Fit,
                 contentDescription = "${item.name} image",

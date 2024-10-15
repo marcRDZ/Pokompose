@@ -24,7 +24,6 @@ class MainEventHandlerImpl @Inject constructor(
     @FetchPokemonReferencesUseCase private val fetchPokemonReferencesUC: UseCase<@JvmSuppressWildcards Nothing, @JvmSuppressWildcards ReferencePageDO<PokemonRefDO.Entity>>,
     @FetchPokemonByIdUseCase private val fetchPokemonByIdUc: UseCase<@JvmSuppressWildcards Int, @JvmSuppressWildcards PokemonDO>
 ) : MainEventHandler {
-    override suspend fun handleInit(): Flow<UIState<MainData>> = flow { }
 
     override suspend fun handleEvent(event: MainEvent): Flow<UIState<MainData>> =
         when (event) {

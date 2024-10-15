@@ -6,12 +6,9 @@ package es.marcrdz.ui.feature.poke_refs
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import es.marcrdz.presentation.handlers.main.MainData
-import es.marcrdz.presentation.handlers.main.MainEvent
-import es.marcrdz.presentation.handlers.main.MainEventHandler
-import es.marcrdz.presentation.handlers.pokemon_refs.PokemonRefsData
-import es.marcrdz.presentation.handlers.pokemon_refs.PokemonRefsEvent
-import es.marcrdz.presentation.handlers.pokemon_refs.PokemonRefsHandler
+import es.marcrdz.presentation.handlers.poke_refs.PokemonRefsData
+import es.marcrdz.presentation.handlers.poke_refs.PokemonRefsEvent
+import es.marcrdz.presentation.handlers.poke_refs.PokemonRefsHandler
 import es.marcrdz.ui.base.BaseStateHolder
 import es.marcrdz.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +24,7 @@ class PokeRefsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            handler.handleInit().collect() {
+            handler.handleEvent(PokemonRefsEvent.OnInit).collect() {
                 processState(it)
             }
         }

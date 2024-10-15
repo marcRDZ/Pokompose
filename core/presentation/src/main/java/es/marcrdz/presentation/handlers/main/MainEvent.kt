@@ -7,7 +7,6 @@ package es.marcrdz.presentation.handlers.main
 import es.marcrdz.domain.domain.ErrorDO
 import es.marcrdz.domain.domain.PokemonRefDO
 import es.marcrdz.presentation.domain.Data
-import es.marcrdz.presentation.domain.Destiny
 import es.marcrdz.presentation.domain.Event
 
 sealed class MainEvent : Event {
@@ -17,5 +16,5 @@ sealed class MainEvent : Event {
 }
 
 data class MainData(
-    val destiny: Destiny = Destiny.PokemonRefs
+    val pokemonRef: PokemonRefDO.Entity? = null
 ) : Data

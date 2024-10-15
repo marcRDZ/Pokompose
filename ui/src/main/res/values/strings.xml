@@ -5,4 +5,9 @@
 <resources>
     <string name="app_name">Pokompose</string>
     <string name="generic_failure">Oops… something went wrong!</string>
+    <string name="type">Type</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="base_xp">Base XP</string>
+    <string name="abilities">Abilities</string>
 </resources>
